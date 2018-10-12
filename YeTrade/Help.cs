@@ -22,11 +22,11 @@ namespace YeTrade
         }
         public static DateTime str2Date(string s)
         {
-            return XmlConvert.ToDateTime(s, "yyyy-MM-ddTHH:mm:ssZ");
+            return XmlConvert.ToDateTime(s, XmlDateTimeSerializationMode.Utc);
         }
         public static string date2Str(DateTime s)
         {
-            return XmlConvert.ToString(s, "yyyy-MM-ddTHH:mm:ssZ");
+            return XmlConvert.ToString(s, XmlDateTimeSerializationMode.Utc);
         }
 
         public static Dictionary<DateTime,CCandleData> getCandleHistoryData(string symbol,DateTime start,DateTime end, string gran)
@@ -36,7 +36,7 @@ namespace YeTrade
             try
             {
                 string requestString = CConfig.mServer + "/v3/instruments/" + symbol + "/candles";
-                requestString = requestString + "?" + "price=A&from=" + date2Str(start) + "&to=" + date2Str(end) + "&granularity=" + gran;
+                requestString = requestString + "?" + "price=AB&from=" + date2Str(start) + "&to=" + date2Str(end) + "&granularity=" + gran;
                 HttpWebRequest request = WebRequest.CreateHttp(requestString);
                 request.Headers[HttpRequestHeader.Authorization] = "Bearer " + CConfig.mToken;
                 request.Method = "GET";

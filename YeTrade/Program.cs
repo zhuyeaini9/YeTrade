@@ -14,7 +14,7 @@ namespace YeTrade
         [STAThread]
         static void Main()
         {
-
+            CHelp.loadConfig();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
