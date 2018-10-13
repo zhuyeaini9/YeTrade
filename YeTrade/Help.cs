@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Data.SQLite;
 
 namespace YeTrade
 {
@@ -29,7 +31,7 @@ namespace YeTrade
             return XmlConvert.ToString(s, XmlDateTimeSerializationMode.Utc);
         }
 
-        public static Dictionary<DateTime,CCandleData> getCandleHistoryData(string symbol,DateTime start,DateTime end, string gran)
+        public static Dictionary<DateTime,CCandleData> getCandleHistoryData(string symbol,DateTime start,DateTime end, string gran="D")
         {
             Dictionary<DateTime, CCandleData> re = new Dictionary<DateTime, CCandleData>();
 
@@ -64,10 +66,54 @@ namespace YeTrade
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(symbol+ex.ToString());
             }
 
             return re;
+        }
+
+
+    }
+
+    public class CSqliteDBHelp
+    {
+        public static string mConnStr = @"Data Source=DB/Trade.db;";
+
+        public static int executeSql(string sql)
+        {
+            SQLiteConnection conn = new SQLiteConnection(mConnStr);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+            conn.Open();
+            int result = cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+            return result;
+        }
+
+        public static DataTable getTable(string sql)
+        {
+            SQLiteConnection conn = new SQLiteConnection(mConnStr);
+            SQLiteDataAdapter da = new SQLiteDataAdapter(sql, conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            da.Dispose();
+            conn.Close();
+
+            return dt;
+        }
+
+        public static object getValue(string sql)
+        {
+            SQLiteConnection conn = new SQLiteConnection(mConnStr);
+            SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+
+            conn.Open();
+            object result = cmd.ExecuteScalar();
+            cmd.Dispose();
+            conn.Close();
+
+            return result;
         }
     }
 }
