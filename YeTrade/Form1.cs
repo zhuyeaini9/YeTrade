@@ -61,7 +61,7 @@ namespace YeTrade
                 TreeNode n = treeView1.Nodes.Add(v.mTypeName);
                 foreach(var c in v.mSymbols)
                 {
-                    n.Nodes.Add(c);
+                    n.Nodes.Add(c.mSymbolName);
                 }
             }
             treeView1.ExpandAll();
@@ -118,20 +118,20 @@ namespace YeTrade
             {
                 curSelNode.Remove();
 
-                CSymbolNode sn = mSymbols.mSymbolNodeList.FirstOrDefault(i => i.mSymbols.Exists(j => j == nodeName));
+                CSymbolNode sn = mSymbols.mSymbolNodeList.FirstOrDefault(i => i.mSymbols.Exists(j => j.mSymbolName == nodeName));
                 if (sn != null)
                 {
-                    sn.mSymbols.Remove(nodeName);
+                    sn.mSymbols.RemoveAll(i => i.mSymbolName == nodeName);
                 }
             }
         }
-        public void addNewSymbol(string symbol)
+        public void addNewSymbol(CSymbolPro symbol)
         {
             TreeNode curSelNode = treeView1.SelectedNode;
             string nodeName = curSelNode.Text;
             if(curSelNode!=null)
             {
-                curSelNode.Nodes.Add(symbol);
+                curSelNode.Nodes.Add(symbol.mSymbolName);
                 curSelNode.ExpandAll();
 
                 CSymbolNode sn = mSymbols.mSymbolNodeList.FirstOrDefault(i => i.mTypeName == nodeName);
@@ -168,7 +168,41 @@ namespace YeTrade
 
         private void button1_test_Click(object sender, EventArgs e)
         {
+            CBreakStrategy bs = new CBreakStrategy();
+            bs.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
+            bs.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
+            bs.mCloseStopAtr = double.Parse(textBox2_closeStopAtr.Text.Trim());
+            bs.mImeStopAtr = double.Parse(textBox3_imeStopAtr.Text.Trim());
+            bs.mLeverage = double.Parse(textBox1_leverage.Text.Trim());
+            bs.mMoney = double.Parse(textBox7_money.Text.Trim());
+            bs.mRisk = double.Parse(textBox6_risk.Text.Trim());
+            bs.mSymbolCount = mSymbols.mSymbolNodeList.Sum(i => i.mSymbols.Count);
 
+            DateTime startTime = dateTimePicker1_start.Value;
+            DateTime endTime = dateTimePicker2_end.Value;
+
+            Dictionary<string, CSymbol> symbols = new Dictionary<string, CSymbol>();
+            foreach (var v in mSymbols.mSymbolNodeList)
+            {
+                foreach (var j in v.mSymbols)
+                {
+                    CSymbol s = new CSymbol();
+                    s.mPro = j;
+                    s.mCandleData = getCandleDataFromSqlite(s.mPro.mSymbolName, comboBox1_PricePeriod.SelectedItem.ToString());
+
+                    symbols[s.mPro.mSymbolName] = s;
+                }
+            }
+
+            do
+            {
+                foreach (var v in symbols)
+                {
+                    v.Value.step(startTime, bs);
+                }
+                startTime = startTime.AddDays(1);
+            }
+            while (startTime.ToShortDateString() != endTime.ToShortDateString());
         }
 
         private void button1_historyDownload_Click(object sender, EventArgs e)
@@ -186,7 +220,7 @@ namespace YeTrade
                 {
                     foreach (var j in v.mSymbols)
                     {
-                        Dictionary<DateTime, CCandleData> priceData = CHelp.getCandleHistoryData(j, dateTimePicker1_start.Value, dateTimePicker2_end.Value, pricePeriod);
+                        Dictionary<DateTime, CCandleData> priceData = CHelp.getCandleHistoryData(j.mSymbolName, dateTimePicker1_start.Value, dateTimePicker2_end.Value, pricePeriod);
                         if (priceData.Count > 0)
                         {
                             string sql = string.Format("select count(*) from PriceData where Symbol='{0}' and Period='{1}'", j, pricePeriod);
@@ -210,6 +244,16 @@ namespace YeTrade
 
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        Dictionary<DateTime,CCandleData> getCandleDataFromSqlite(string symbol,string period)
+        {
+            Dictionary<DateTime, CCandleData> re = new Dictionary<DateTime, CCandleData>();
+
+            string sql = string.Format("select Data from PriceData where Symbol='{0}' and Period='{1}'", symbol, period);
+            string priceData = CSqliteDBHelp.getValue(sql).ToString();
+            re = JsonConvert.DeserializeObject<Dictionary<DateTime, CCandleData>>(priceData);
+            return re;
         }
     }
 }

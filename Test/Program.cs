@@ -10,7 +10,8 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(DateTime.UtcNow);
+            DateTime a = new DateTime(2001, 1, 1);
+            Console.WriteLine(a.ToShortDateString());
         }
     }
 }

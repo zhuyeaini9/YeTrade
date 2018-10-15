@@ -21,12 +21,17 @@ namespace YeTrade
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(textBox1.Text.Trim()))
-            {
-                MessageBox.Show("请输入品种名");
-                return;
-            }
-            mParent.addNewSymbol(textBox1.Text.Trim());
+            CSymbolPro s = new CSymbolPro();
+            s.mContractSize = double.Parse(textBox4_contractSize.Text.Trim());
+            s.mMarginRadio = double.Parse(textBox8_marginRadio.Text.Trim());
+            s.mMaxVol = double.Parse(textBox6_maxVol.Text.Trim());
+            s.mMinVol = double.Parse(textBox5_minVol.Text.Trim());
+            s.mStepVol = double.Parse(textBox7_minStepVol.Text.Trim());
+            s.mSymbolName = textBox1_symbolName.Text.Trim();
+            s.mTickSize = double.Parse(textBox2_tickSize.Text.Trim());
+            s.mTickVal = double.Parse(textBox3_tickValue.Text.Trim());
+            
+            mParent.addNewSymbol(s);
             Close();
         }
     }

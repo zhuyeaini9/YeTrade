@@ -30,7 +30,70 @@ namespace YeTrade
         {
             return XmlConvert.ToString(s, XmlDateTimeSerializationMode.Utc);
         }
+        
+        public static double toUSD(string currency,DateTime d)
+        {
+            double re = 1;
 
+            if (currency == "USD")
+                re = 1;
+            else
+            {
+                OHLC p = new OHLC();
+                string symbol = currency + "_USD";
+                bool hasP = getRecentPrice(symbol, d, out p);
+                if(hasP)
+                {
+                    re = p.c;
+                }
+                if(!hasP)
+                {
+                    symbol = "USD_" + currency;
+                    hasP = getRecentPrice(symbol, d, out p);
+                    re = 1/p.c;
+                }
+
+            }
+            
+            return re;
+        }
+        public static bool getRecentPrice(string symbol,DateTime d, out OHLC re,string gran = "D")
+        {
+            bool r = true;
+            re = new OHLC();
+            try
+            {
+                string requestString = CConfig.mServer + "/v3/instruments/" + symbol + "/candles";
+                requestString = requestString + "?" + "price=ABM&count=1&granularity=" + gran;
+                HttpWebRequest request = WebRequest.CreateHttp(requestString);
+                request.Headers[HttpRequestHeader.Authorization] = "Bearer " + CConfig.mToken;
+                request.Method = "GET";
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        throw new WebException("Web request error.");
+                    }
+                    Stream s = response.GetResponseStream();
+                    StreamReader sr = new StreamReader(s);
+                    var jr = new JsonTextReader(sr);
+                    var serializer = new JsonSerializer();
+                    Instrument im = serializer.Deserialize<Instrument>(jr);
+
+                    foreach (var v in im.candles)
+                    {
+                        re = v.mid;
+                    }
+                }
+            
+
+            }
+            catch(Exception)
+            {
+                r = false;
+            }
+            return r;
+        }
         public static Dictionary<DateTime,CCandleData> getCandleHistoryData(string symbol,DateTime start,DateTime end, string gran="D")
         {
             Dictionary<DateTime, CCandleData> re = new Dictionary<DateTime, CCandleData>();
@@ -38,7 +101,7 @@ namespace YeTrade
             try
             {
                 string requestString = CConfig.mServer + "/v3/instruments/" + symbol + "/candles";
-                requestString = requestString + "?" + "price=AB&from=" + date2Str(start) + "&to=" + date2Str(end) + "&granularity=" + gran;
+                requestString = requestString + "?" + "price=ABM&from=" + date2Str(start) + "&to=" + date2Str(end) + "&granularity=" + gran;
                 HttpWebRequest request = WebRequest.CreateHttp(requestString);
                 request.Headers[HttpRequestHeader.Authorization] = "Bearer " + CConfig.mToken;
                 request.Method = "GET";
@@ -59,7 +122,7 @@ namespace YeTrade
                         DateTime dt = str2Date(v.time);
                         if(!re.ContainsKey(dt))
                         {
-                            re[dt] = new CCandleData(v.ask, dt);
+                            re[dt] = new CCandleData(v.mid, dt);
                         }
                     }
                 }

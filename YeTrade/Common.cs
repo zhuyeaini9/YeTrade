@@ -41,11 +41,7 @@ namespace YeTrade
         public string time { get; set; }
         public OHLC ask { get; set; }
         public OHLC bid { get; set; }
-        public override string ToString()
-        {
-            return time + "," + ask.o + "," + bid.o + "," + ask.h + "," + bid.h + ","
-                + ask.l + "," + bid.l + "," + ask.c + "," + bid.c + "," + volume;
-        }
+        public OHLC mid { get; set; }
     }
     public class Instrument
     {
@@ -58,42 +54,9 @@ namespace YeTrade
         }
     }
 
-    public class CSymbolNode
+    public class CSymbolPro
     {
-        public string mTypeName;
-        public List<string> mSymbols = new List<string>();
-    }
-    public class CSymbolTree
-    {
-        public List<CSymbolNode> mSymbolNodeList = new List<CSymbolNode>();
-    }
-
-    public class CBreakStrategy
-    {
-        //风险因子
-        public double mRisk;
-        //杠杆 50 100 200...
-        public double mLeverage;
-        //突破周期 20 50 100
-        public int mBreakPeriod;
-        //ATR周期
-        public int mAtrPeriod;
-        //收盘价止损 atr
-        public double mCloseStopAtr;
-        //即时止损 atr
-        public double mImeStopAtr;
-        //初始资金
-        public double mMoney;
-        //
-    }
-    public class CSymbol
-    {
-        //品种名
         public string mSymbolName;
-        //价格
-        public Dictionary<DateTime, CCandleData> mCandleData = new Dictionary<DateTime, CCandleData>();
-        //价格周期
-        public string mPricePeriod;
         //1手的量变化最小变化点位(tickSize)对应的金额
         public double mTickVal;
         //最小变化点位
@@ -108,21 +71,143 @@ namespace YeTrade
         public double mStepVol;
         //保证金比率 用于保证金计算
         public double mMarginRadio;
+    }
+    public class CSymbolNode
+    {
+        public string mTypeName;
+        public List<CSymbolPro> mSymbols = new List<CSymbolPro>();
+    }
+    public class CSymbolTree
+    {
+        public List<CSymbolNode> mSymbolNodeList = new List<CSymbolNode>();
+    }
 
-        public List<double> mPriceList = new List<double>();
+    public class CBreakStrategy
+    {
+        //总风险因子
+        public double mRisk;
+        //杠杆 50 100 200...
+        public double mLeverage;
+        //突破周期 20 50 100
+        public int mBreakPeriod;
+        //ATR周期
+        public int mAtrPeriod;
+        //收盘价止损 atr
+        public double mCloseStopAtr;
+        //即时止损 atr
+        public double mImeStopAtr;
+        //初始资金
+        public double mMoney;
+        //总品种数
+        public int mSymbolCount;
+    }
+    public class CSymbol
+    {
+        public CSymbolPro mPro = new CSymbolPro();
+        //价格
+        public Dictionary<DateTime, CCandleData> mCandleData = new Dictionary<DateTime, CCandleData>();
+
+        public List<OHLC> mPriceList = new List<OHLC>();
         public bool mHasVol = false;
+        public double mTradePrice;
+        public double mCloseStopPrice;
+        public double mImeStopPrice;
+        public double mVol;
         //1:buy -1:sell
         public int mBuyOrSell = 0;
-        public double calLoss(double vol,double point)
+        public string getSettleCurrency()
+        {
+            return mPro.mSymbolName.Substring(mPro.mSymbolName.IndexOf("_") + 1);
+        }
+        public double toCuy(double dollar,DateTime d)
+        {
+            string cry = getSettleCurrency();
+            if (cry == "USD")
+            {
+                return dollar;
+            }
+            else
+            {
+                return dollar / CHelp.toUSD(cry, d);
+            }
+        }
+        public double toUSD(double v,DateTime d)
+        {
+            string cry = getSettleCurrency();
+            if (cry == "USD")
+            {
+                return v;
+            }
+            else
+            {
+                return v*CHelp.toUSD(cry, d);
+            }
+        }
+        public double calLoss(double vol,double point,DateTime d)
         {
             double re = 0;
-            re = vol * (point / mTickSize) * mTickVal;
-            return re;
+            re = vol * (point / mPro.mTickSize) * mPro.mTickVal;
+
+            return toUSD(re,d);
         }
         public double calMargin(double vol,double price,double leverage)
         {
             double re = 0;
-            re = vol * mContractSize * price * mMarginRadio / leverage;
+            re = vol * mPro.mContractSize * price * mPro.mMarginRadio / leverage;
+            return re;
+        }
+        public double getVol(CBreakStrategy bs,double point,DateTime d)
+        {
+            double loss = bs.mMoney * bs.mRisk / bs.mSymbolCount;
+            double v = loss / mPro.mTickVal / (point / mPro.mTickSize);
+            v = toCuy(v, d);
+
+            int howV = (int)(v / mPro.mStepVol);
+            v = howV * mPro.mStepVol;
+
+            if (v < mPro.mMinVol)
+                v = mPro.mMinVol;
+            if (v > mPro.mMaxVol)
+                v = mPro.mMaxVol;
+
+            return v;
+        }
+
+        //0:no break 1:buy -1:sell
+        int checkBreak(CBreakStrategy bs)
+        {
+            int re = 0;
+
+            List<OHLC> breakList = mPriceList.Skip(Math.Max(0, mPriceList.Count() - bs.mBreakPeriod)).ToList();
+            double highPrice = breakList.Take(bs.mBreakPeriod - 1).Select(i=>i.c).Max();
+            if (breakList.Last().c > highPrice)
+            {
+                re = 1;
+            }
+
+            double lowPrice = breakList.Take(bs.mBreakPeriod - 1).Select(i=>i.c).Min();
+            if (breakList.Last().c < lowPrice)
+            {
+                re = -1;
+            }
+            return re;
+        }
+        double calAtr(CBreakStrategy bs)
+        {
+            double re = 0;
+
+            List<OHLC> atrList = mPriceList.Skip(Math.Max(0, mPriceList.Count() - bs.mAtrPeriod)).ToList();
+            List<double> mtr = new List<double>();
+            for(int i=atrList.Count-1;i>0;i--)
+            {
+                OHLC pre = atrList[i - 1];
+                OHLC cur = atrList[i];
+
+                double[] m = { Math.Abs(cur.h - cur.l), Math.Abs(cur.h - pre.c), Math.Abs(cur.l - pre.c) };
+                mtr.Add(m.Max());
+            }
+            re = mtr.Average();
+
             return re;
         }
         public void step(DateTime curTime,CBreakStrategy bs)
@@ -130,35 +215,104 @@ namespace YeTrade
             if (!mCandleData.ContainsKey(curTime))
                 return;
 
-            if(mPriceList.Count<bs.mBreakPeriod)
+            OHLC prePrice = mCandleData[curTime].mPrice;
+
+            if (mPriceList.Count < bs.mBreakPeriod - 1 || mPriceList.Count < bs.mAtrPeriod - 1)
             {
-                mPriceList.Add(mCandleData[curTime].mPrice.c);
+                mPriceList.Add(prePrice);
             }
             else
             {
-                if(mPriceList.Count>bs.mBreakPeriod)
-                {
-                    mPriceList.Add(mCandleData[curTime].mPrice.c);
+                mPriceList.Add(prePrice);
+
+                int bigPeriod = bs.mBreakPeriod > bs.mAtrPeriod ? bs.mBreakPeriod : bs.mAtrPeriod;
+                while (mPriceList.Count > bigPeriod)
                     mPriceList.RemoveAt(0);
-                }
+
+                double atr = calAtr(bs);
+
                 if (!mHasVol)
                 {
-                    double highPrice = mPriceList.Max();
-                    if (mPriceList.Last() > highPrice)
+                    int breakRe = checkBreak(bs);
+                    if(breakRe == 1)
                     {
                         //break open vol buy
-                    }
+                        mBuyOrSell = 1;
+                        mTradePrice = prePrice.c;
 
-                    double lowPrice = mPriceList.Min();
-                    if(mPriceList.Last() < lowPrice)
+                        mCloseStopPrice = prePrice.c - atr * bs.mCloseStopAtr;
+                        mImeStopPrice = prePrice.c - atr * bs.mImeStopAtr;
+
+                        mVol = getVol(bs, atr * bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : mImeStopPrice, curTime);
+
+                        mHasVol = true;
+                    }
+                    if(breakRe == -1)
                     {
                         //break open vol sell
+                        mBuyOrSell = -1;
+                        mTradePrice = prePrice.c;
 
+                        mCloseStopPrice = prePrice.c + atr * bs.mCloseStopAtr;
+                        mImeStopPrice = prePrice.c + atr * bs.mImeStopAtr;
+
+                        mVol = getVol(bs, atr * bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : mImeStopPrice, curTime);
+
+                        mHasVol = true;
                     }
                 }
                 else
                 {
+                    bool stop = false;
                     //check stop
+                    if(mBuyOrSell==1)
+                    {
+                        if(!stop && prePrice.l<mImeStopPrice)
+                        {
+                            stop = true;
+                            bs.mMoney += calLoss(mVol, Math.Abs(mImeStopPrice - mTradePrice),curTime);
+                        }
+                        if (!stop && prePrice.c<mCloseStopPrice)
+                        {
+                            stop = true;
+                            bs.mMoney += calLoss(mVol, Math.Abs(prePrice.c - mTradePrice),curTime);
+                        }
+                        if(!stop)
+                        {
+                            double newCloseStopPrice = prePrice.c - bs.mCloseStopAtr * atr;
+                            double newImeStopPrice = prePrice.c - bs.mImeStopAtr * atr;
+                            if (newCloseStopPrice > mCloseStopPrice)
+                                mCloseStopPrice = newCloseStopPrice;
+                            if (newImeStopPrice > mImeStopPrice)
+                                mImeStopPrice = newImeStopPrice;
+                        }
+                    }
+                    if(mBuyOrSell == -1)
+                    {
+                        if (!stop && prePrice.h > mImeStopPrice)
+                        {
+                            stop = true;
+                            bs.mMoney += calLoss(mVol, Math.Abs(mTradePrice - mImeStopPrice),curTime);
+                        }
+                        if (!stop && prePrice.c > mCloseStopPrice)
+                        {
+                            stop = true;
+                            bs.mMoney += calLoss(mVol, Math.Abs(mTradePrice - prePrice.c),curTime);
+                        }
+                        if (!stop)
+                        {
+                            double newCloseStopPrice = prePrice.c + bs.mCloseStopAtr * atr;
+                            double newImeStopPrice = prePrice.c + bs.mImeStopAtr * atr;
+                            if (newCloseStopPrice < mCloseStopPrice)
+                                mCloseStopPrice = newCloseStopPrice;
+                            if (newImeStopPrice < mImeStopPrice)
+                                mImeStopPrice = newImeStopPrice;
+                        }
+                    }
+                    if(stop)
+                    {
+                        mHasVol = false;
+                    }
 
                 }
             }
