@@ -168,6 +168,8 @@ namespace YeTrade
 
         private void button1_test_Click(object sender, EventArgs e)
         {
+            button1_test.Enabled = false;
+
             CBreakStrategy bs = new CBreakStrategy();
             bs.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
             bs.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
@@ -213,6 +215,11 @@ namespace YeTrade
                 }
                 while (startTime.Date != endTime.Date);
 
+                Invoke(new Action(() =>
+                {
+                    button1_test.Enabled = true;
+                }));
+
                 Log4netHelper.LogInfo("money:" + bs.mMoney.ToString("F2"));
             }));
 
@@ -225,6 +232,8 @@ namespace YeTrade
         {
             if (MessageBox.Show("将会下载该时间段所有品种的历史价格数据，需要较多时间，确定继续吗？", "", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
+
+            button1_historyDownload.Enabled = false;
 
             string pricePeriod = comboBox1_PricePeriod.SelectedItem.ToString().Trim();
             progressBar1_historyData.Maximum = mSymbols.mSymbolNodeList.Sum(i => i.mSymbols.Count);
@@ -257,6 +266,11 @@ namespace YeTrade
                         }));
                     }
                 }
+                Invoke(new Action(() =>
+                {
+                    button1_historyDownload.Enabled = true;
+                }));
+
             }));
 
             thread.IsBackground = true;

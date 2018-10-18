@@ -289,7 +289,7 @@ namespace YeTrade
                             stop = true;
                             double profit = calLoss(mVol, mImeStopPrice - mTradePrice,curTime);
                             bs.mMoney += profit;
-                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at ime price:" + prePrice.l.ToString("F2") + " profit:" + profit.ToString("F2")
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at ime price:" + mImeStopPrice.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:"+bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
                         }
@@ -321,7 +321,7 @@ namespace YeTrade
                             stop = true;
                             double profit = calLoss(mVol, mTradePrice - mImeStopPrice,curTime);
                             bs.mMoney += profit;
-                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at ime price:" + prePrice.l.ToString("F2") + " profit:" + profit.ToString("F2")
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at ime price:" + mImeStopPrice.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:" + bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
                         }
@@ -330,7 +330,7 @@ namespace YeTrade
                             stop = true;
                             double profit = calLoss(mVol, mTradePrice - prePrice.c,curTime);
                             bs.mMoney += profit;
-                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:" + bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
                         }

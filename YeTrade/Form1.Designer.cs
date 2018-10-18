@@ -28,15 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("非农商品");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("农商品");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("外汇");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("指数");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("加密货币");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("债券&利率");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("非农商品");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("农商品");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("外汇");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("指数");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("加密货币");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("债券&利率");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.button1_saveSymbolPro = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox7_minStepVol = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox6_maxVol = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox5_minVol = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.textBox4_contractSize = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.textBox3_tickValue = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox2_tickSize = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox1_symbolName = new System.Windows.Forms.TextBox();
             this.progressBar1_test = new System.Windows.Forms.ProgressBar();
             this.textBox1_leverage = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -66,21 +81,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1_breakPeriod = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox7_minStepVol = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBox6_maxVol = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBox5_minVol = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.textBox4_contractSize = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.textBox3_tickValue = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.textBox2_tickSize = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox1_symbolName = new System.Windows.Forms.TextBox();
-            this.button1_saveSymbolPro = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -115,25 +115,25 @@
             this.treeView1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode7.Name = "节点0";
-            treeNode7.Text = "非农商品";
-            treeNode8.Name = "节点1";
-            treeNode8.Text = "农商品";
-            treeNode9.Name = "节点2";
-            treeNode9.Text = "外汇";
-            treeNode10.Name = "节点3";
-            treeNode10.Text = "指数";
-            treeNode11.Name = "节点4";
-            treeNode11.Text = "加密货币";
-            treeNode12.Name = "节点5";
-            treeNode12.Text = "债券&利率";
+            treeNode1.Name = "节点0";
+            treeNode1.Text = "非农商品";
+            treeNode2.Name = "节点1";
+            treeNode2.Text = "农商品";
+            treeNode3.Name = "节点2";
+            treeNode3.Text = "外汇";
+            treeNode4.Name = "节点3";
+            treeNode4.Text = "指数";
+            treeNode5.Name = "节点4";
+            treeNode5.Text = "加密货币";
+            treeNode6.Name = "节点5";
+            treeNode6.Text = "债券&利率";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.treeView1.Size = new System.Drawing.Size(214, 604);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -200,6 +200,150 @@
             this.splitContainer2.Size = new System.Drawing.Size(837, 604);
             this.splitContainer2.SplitterDistance = 179;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // button1_saveSymbolPro
+            // 
+            this.button1_saveSymbolPro.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1_saveSymbolPro.Location = new System.Drawing.Point(647, 138);
+            this.button1_saveSymbolPro.Name = "button1_saveSymbolPro";
+            this.button1_saveSymbolPro.Size = new System.Drawing.Size(85, 35);
+            this.button1_saveSymbolPro.TabIndex = 30;
+            this.button1_saveSymbolPro.Text = "保存";
+            this.button1_saveSymbolPro.UseVisualStyleBackColor = true;
+            this.button1_saveSymbolPro.Click += new System.EventHandler(this.button1_saveSymbolPro_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label13.Location = new System.Drawing.Point(442, 105);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(120, 16);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "最小变化手数：";
+            // 
+            // textBox7_minStepVol
+            // 
+            this.textBox7_minStepVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox7_minStepVol.Location = new System.Drawing.Point(568, 102);
+            this.textBox7_minStepVol.Name = "textBox7_minStepVol";
+            this.textBox7_minStepVol.Size = new System.Drawing.Size(164, 26);
+            this.textBox7_minStepVol.TabIndex = 29;
+            this.textBox7_minStepVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(474, 57);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(88, 16);
+            this.label14.TabIndex = 28;
+            this.label14.Text = "最大手数：";
+            // 
+            // textBox6_maxVol
+            // 
+            this.textBox6_maxVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox6_maxVol.Location = new System.Drawing.Point(568, 53);
+            this.textBox6_maxVol.Name = "textBox6_maxVol";
+            this.textBox6_maxVol.Size = new System.Drawing.Size(164, 26);
+            this.textBox6_maxVol.TabIndex = 27;
+            this.textBox6_maxVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(474, 12);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(88, 16);
+            this.label15.TabIndex = 26;
+            this.label15.Text = "最小手数：";
+            // 
+            // textBox5_minVol
+            // 
+            this.textBox5_minVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox5_minVol.Location = new System.Drawing.Point(568, 7);
+            this.textBox5_minVol.Name = "textBox5_minVol";
+            this.textBox5_minVol.Size = new System.Drawing.Size(164, 26);
+            this.textBox5_minVol.TabIndex = 25;
+            this.textBox5_minVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Location = new System.Drawing.Point(104, 150);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(120, 16);
+            this.label16.TabIndex = 24;
+            this.label16.Text = "每手合约大小：";
+            // 
+            // textBox4_contractSize
+            // 
+            this.textBox4_contractSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox4_contractSize.Location = new System.Drawing.Point(230, 147);
+            this.textBox4_contractSize.Name = "textBox4_contractSize";
+            this.textBox4_contractSize.Size = new System.Drawing.Size(164, 26);
+            this.textBox4_contractSize.TabIndex = 23;
+            this.textBox4_contractSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(128, 105);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(96, 16);
+            this.label17.TabIndex = 22;
+            this.label17.Text = "TickValue：";
+            // 
+            // textBox3_tickValue
+            // 
+            this.textBox3_tickValue.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox3_tickValue.Location = new System.Drawing.Point(230, 102);
+            this.textBox3_tickValue.Name = "textBox3_tickValue";
+            this.textBox3_tickValue.Size = new System.Drawing.Size(164, 26);
+            this.textBox3_tickValue.TabIndex = 21;
+            this.textBox3_tickValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(136, 57);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(88, 16);
+            this.label18.TabIndex = 20;
+            this.label18.Text = "TickSize：";
+            // 
+            // textBox2_tickSize
+            // 
+            this.textBox2_tickSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox2_tickSize.Location = new System.Drawing.Point(230, 53);
+            this.textBox2_tickSize.Name = "textBox2_tickSize";
+            this.textBox2_tickSize.Size = new System.Drawing.Size(164, 26);
+            this.textBox2_tickSize.TabIndex = 19;
+            this.textBox2_tickSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.Location = new System.Drawing.Point(168, 12);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(56, 16);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "品种：";
+            // 
+            // textBox1_symbolName
+            // 
+            this.textBox1_symbolName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1_symbolName.Location = new System.Drawing.Point(230, 7);
+            this.textBox1_symbolName.Name = "textBox1_symbolName";
+            this.textBox1_symbolName.Size = new System.Drawing.Size(164, 26);
+            this.textBox1_symbolName.TabIndex = 17;
+            this.textBox1_symbolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // progressBar1_test
             // 
@@ -485,150 +629,6 @@
             this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "突破周期：";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(442, 105);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(120, 16);
-            this.label13.TabIndex = 30;
-            this.label13.Text = "最小变化手数：";
-            // 
-            // textBox7_minStepVol
-            // 
-            this.textBox7_minStepVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox7_minStepVol.Location = new System.Drawing.Point(568, 102);
-            this.textBox7_minStepVol.Name = "textBox7_minStepVol";
-            this.textBox7_minStepVol.Size = new System.Drawing.Size(164, 26);
-            this.textBox7_minStepVol.TabIndex = 29;
-            this.textBox7_minStepVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(474, 57);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(88, 16);
-            this.label14.TabIndex = 28;
-            this.label14.Text = "最大手数：";
-            // 
-            // textBox6_maxVol
-            // 
-            this.textBox6_maxVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6_maxVol.Location = new System.Drawing.Point(568, 53);
-            this.textBox6_maxVol.Name = "textBox6_maxVol";
-            this.textBox6_maxVol.Size = new System.Drawing.Size(164, 26);
-            this.textBox6_maxVol.TabIndex = 27;
-            this.textBox6_maxVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(474, 12);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(88, 16);
-            this.label15.TabIndex = 26;
-            this.label15.Text = "最小手数：";
-            // 
-            // textBox5_minVol
-            // 
-            this.textBox5_minVol.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5_minVol.Location = new System.Drawing.Point(568, 7);
-            this.textBox5_minVol.Name = "textBox5_minVol";
-            this.textBox5_minVol.Size = new System.Drawing.Size(164, 26);
-            this.textBox5_minVol.TabIndex = 25;
-            this.textBox5_minVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(104, 150);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(120, 16);
-            this.label16.TabIndex = 24;
-            this.label16.Text = "每手合约大小：";
-            // 
-            // textBox4_contractSize
-            // 
-            this.textBox4_contractSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4_contractSize.Location = new System.Drawing.Point(230, 147);
-            this.textBox4_contractSize.Name = "textBox4_contractSize";
-            this.textBox4_contractSize.Size = new System.Drawing.Size(164, 26);
-            this.textBox4_contractSize.TabIndex = 23;
-            this.textBox4_contractSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(128, 105);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(96, 16);
-            this.label17.TabIndex = 22;
-            this.label17.Text = "TickValue：";
-            // 
-            // textBox3_tickValue
-            // 
-            this.textBox3_tickValue.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3_tickValue.Location = new System.Drawing.Point(230, 102);
-            this.textBox3_tickValue.Name = "textBox3_tickValue";
-            this.textBox3_tickValue.Size = new System.Drawing.Size(164, 26);
-            this.textBox3_tickValue.TabIndex = 21;
-            this.textBox3_tickValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(136, 57);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(88, 16);
-            this.label18.TabIndex = 20;
-            this.label18.Text = "TickSize：";
-            // 
-            // textBox2_tickSize
-            // 
-            this.textBox2_tickSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2_tickSize.Location = new System.Drawing.Point(230, 53);
-            this.textBox2_tickSize.Name = "textBox2_tickSize";
-            this.textBox2_tickSize.Size = new System.Drawing.Size(164, 26);
-            this.textBox2_tickSize.TabIndex = 19;
-            this.textBox2_tickSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(168, 12);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(56, 16);
-            this.label19.TabIndex = 18;
-            this.label19.Text = "品种：";
-            // 
-            // textBox1_symbolName
-            // 
-            this.textBox1_symbolName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1_symbolName.Location = new System.Drawing.Point(230, 7);
-            this.textBox1_symbolName.Name = "textBox1_symbolName";
-            this.textBox1_symbolName.Size = new System.Drawing.Size(164, 26);
-            this.textBox1_symbolName.TabIndex = 17;
-            this.textBox1_symbolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button1_saveSymbolPro
-            // 
-            this.button1_saveSymbolPro.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1_saveSymbolPro.Location = new System.Drawing.Point(647, 138);
-            this.button1_saveSymbolPro.Name = "button1_saveSymbolPro";
-            this.button1_saveSymbolPro.Size = new System.Drawing.Size(85, 35);
-            this.button1_saveSymbolPro.TabIndex = 30;
-            this.button1_saveSymbolPro.Text = "保存";
-            this.button1_saveSymbolPro.UseVisualStyleBackColor = true;
-            this.button1_saveSymbolPro.Click += new System.EventHandler(this.button1_saveSymbolPro_Click);
             // 
             // Form1
             // 
