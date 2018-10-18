@@ -16,15 +16,19 @@ namespace YeTrade
     {
         public OHLC mPrice;
         public DateTime mCandleTime;
+        public CCandleData()
+        {
+
+        }
         public CCandleData(OHLC ol,string dateStr)
         {
             mPrice = ol;
-            mCandleTime = CHelp.str2Date(dateStr);
+            mCandleTime = CHelp.str2Date(dateStr).Date;
         }
         public CCandleData(OHLC ol,DateTime dt)
         {
             mPrice = ol;
-            mCandleTime = dt;
+            mCandleTime = dt.Date;
         }
     }
     public struct OHLC
@@ -54,6 +58,15 @@ namespace YeTrade
         }
     }
 
+    public class CCandleDataWrap
+    {
+        public Dictionary<DateTime, CCandleData> mPrice = new Dictionary<DateTime, CCandleData>();
+        public CCandleDataWrap(Dictionary<DateTime, CCandleData> r)
+        {
+            mPrice = r;
+        }
+    }
+
     public class CSymbolPro
     {
         public string mSymbolName;
@@ -69,8 +82,6 @@ namespace YeTrade
         public double mMaxVol;
         //最小变化手数
         public double mStepVol;
-        //保证金比率 用于保证金计算
-        public double mMarginRadio;
     }
     public class CSymbolNode
     {
@@ -150,17 +161,19 @@ namespace YeTrade
 
             return toUSD(re,d);
         }
+        /*
         public double calMargin(double vol,double price,double leverage)
         {
             double re = 0;
             re = vol * mPro.mContractSize * price * mPro.mMarginRadio / leverage;
             return re;
         }
+        */
         public double getVol(CBreakStrategy bs,double point,DateTime d)
         {
-            double loss = bs.mMoney * bs.mRisk / bs.mSymbolCount;
+            double loss = bs.mMoney * bs.mRisk / 100 / bs.mSymbolCount;
+            loss = toCuy(loss, d);
             double v = loss / mPro.mTickVal / (point / mPro.mTickSize);
-            v = toCuy(v, d);
 
             int howV = (int)(v / mPro.mStepVol);
             v = howV * mPro.mStepVol;
@@ -212,7 +225,7 @@ namespace YeTrade
         }
         public void step(DateTime curTime,CBreakStrategy bs)
         {
-            if (!mCandleData.ContainsKey(curTime))
+            if (!mCandleData.Keys.Contains(curTime.Date))
                 return;
 
             OHLC prePrice = mCandleData[curTime].mPrice;
@@ -243,9 +256,11 @@ namespace YeTrade
                         mCloseStopPrice = prePrice.c - atr * bs.mCloseStopAtr;
                         mImeStopPrice = prePrice.c - atr * bs.mImeStopAtr;
 
-                        mVol = getVol(bs, atr * bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : mImeStopPrice, curTime);
+                        mVol = getVol(bs, atr * (bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : bs.mImeStopAtr), curTime);
 
                         mHasVol = true;
+
+                        Log4netHelper.LogInfo("symbol:"+mPro.mSymbolName+" buy:" + mVol.ToString("F2") + " price:" + mTradePrice.ToString("F2") + " time:" + curTime.ToShortDateString());
                     }
                     if(breakRe == -1)
                     {
@@ -256,9 +271,11 @@ namespace YeTrade
                         mCloseStopPrice = prePrice.c + atr * bs.mCloseStopAtr;
                         mImeStopPrice = prePrice.c + atr * bs.mImeStopAtr;
 
-                        mVol = getVol(bs, atr * bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : mImeStopPrice, curTime);
+                        mVol = getVol(bs, atr * (bs.mCloseStopAtr > bs.mImeStopAtr ? bs.mCloseStopAtr : bs.mImeStopAtr), curTime);
 
                         mHasVol = true;
+
+                        Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell:" + mVol.ToString("F2") + " price:" + mTradePrice.ToString("F2") + " time:" + curTime.ToShortDateString());
                     }
                 }
                 else
@@ -270,12 +287,20 @@ namespace YeTrade
                         if(!stop && prePrice.l<mImeStopPrice)
                         {
                             stop = true;
-                            bs.mMoney += calLoss(mVol, Math.Abs(mImeStopPrice - mTradePrice),curTime);
+                            double profit = calLoss(mVol, mImeStopPrice - mTradePrice,curTime);
+                            bs.mMoney += profit;
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at ime price:" + prePrice.l.ToString("F2") + " profit:" + profit.ToString("F2")
+                                + " all_money:"+bs.mMoney.ToString("F2")
+                                + " time:" + curTime.ToShortDateString());
                         }
                         if (!stop && prePrice.c<mCloseStopPrice)
                         {
                             stop = true;
-                            bs.mMoney += calLoss(mVol, Math.Abs(prePrice.c - mTradePrice),curTime);
+                            double profit = calLoss(mVol, prePrice.c - mTradePrice,curTime);
+                            bs.mMoney += profit;
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
+                                + " all_money:" + bs.mMoney.ToString("F2")
+                                + " time:" + curTime.ToShortDateString());
                         }
                         if(!stop)
                         {
@@ -285,6 +310,8 @@ namespace YeTrade
                                 mCloseStopPrice = newCloseStopPrice;
                             if (newImeStopPrice > mImeStopPrice)
                                 mImeStopPrice = newImeStopPrice;
+
+                            //Log4netHelper.LogInfo(string.Format("buy update price:close price-{0} ime price-{1}", mCloseStopPrice.ToString("F2"), mImeStopPrice.ToString("F2")));
                         }
                     }
                     if(mBuyOrSell == -1)
@@ -292,12 +319,20 @@ namespace YeTrade
                         if (!stop && prePrice.h > mImeStopPrice)
                         {
                             stop = true;
-                            bs.mMoney += calLoss(mVol, Math.Abs(mTradePrice - mImeStopPrice),curTime);
+                            double profit = calLoss(mVol, mTradePrice - mImeStopPrice,curTime);
+                            bs.mMoney += profit;
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at ime price:" + prePrice.l.ToString("F2") + " profit:" + profit.ToString("F2")
+                                + " all_money:" + bs.mMoney.ToString("F2")
+                                + " time:" + curTime.ToShortDateString());
                         }
                         if (!stop && prePrice.c > mCloseStopPrice)
                         {
                             stop = true;
-                            bs.mMoney += calLoss(mVol, Math.Abs(mTradePrice - prePrice.c),curTime);
+                            double profit = calLoss(mVol, mTradePrice - prePrice.c,curTime);
+                            bs.mMoney += profit;
+                            Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
+                                + " all_money:" + bs.mMoney.ToString("F2")
+                                + " time:" + curTime.ToShortDateString());
                         }
                         if (!stop)
                         {
@@ -307,6 +342,8 @@ namespace YeTrade
                                 mCloseStopPrice = newCloseStopPrice;
                             if (newImeStopPrice < mImeStopPrice)
                                 mImeStopPrice = newImeStopPrice;
+
+                            //Log4netHelper.LogInfo(string.Format("sell update price:close price-{0} ime price-{1}", mCloseStopPrice.ToString("F2"), mImeStopPrice.ToString("F2")));
                         }
                     }
                     if(stop)

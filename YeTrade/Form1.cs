@@ -178,8 +178,8 @@ namespace YeTrade
             bs.mRisk = double.Parse(textBox6_risk.Text.Trim());
             bs.mSymbolCount = mSymbols.mSymbolNodeList.Sum(i => i.mSymbols.Count);
 
-            DateTime startTime = dateTimePicker1_start.Value;
-            DateTime endTime = dateTimePicker2_end.Value;
+            DateTime startTime = dateTimePicker1_start.Value.Date;
+            DateTime endTime = dateTimePicker2_end.Value.Date;
 
             Dictionary<string, CSymbol> symbols = new Dictionary<string, CSymbol>();
             foreach (var v in mSymbols.mSymbolNodeList)
@@ -194,15 +194,31 @@ namespace YeTrade
                 }
             }
 
-            do
+            progressBar1_test.Value = 0;
+            progressBar1_test.Maximum = (endTime - startTime).Days;
+
+            Thread thread = new Thread(new ThreadStart(() =>
             {
-                foreach (var v in symbols)
+                do
                 {
-                    v.Value.step(startTime, bs);
+                    Invoke(new Action(() =>
+                    {
+                        progressBar1_test.Value++;
+                    }));
+                    foreach (var v in symbols)
+                    {
+                        v.Value.step(startTime, bs);
+                    }
+                    startTime = startTime.AddDays(1);
                 }
-                startTime = startTime.AddDays(1);
-            }
-            while (startTime.ToShortDateString() != endTime.ToShortDateString());
+                while (startTime.Date != endTime.Date);
+
+                Log4netHelper.LogInfo("money:" + bs.mMoney.ToString("F2"));
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();
+
         }
 
         private void button1_historyDownload_Click(object sender, EventArgs e)
@@ -221,16 +237,17 @@ namespace YeTrade
                     foreach (var j in v.mSymbols)
                     {
                         Dictionary<DateTime, CCandleData> priceData = CHelp.getCandleHistoryData(j.mSymbolName, dateTimePicker1_start.Value, dateTimePicker2_end.Value, pricePeriod);
+
                         if (priceData.Count > 0)
                         {
-                            string sql = string.Format("select count(*) from PriceData where Symbol='{0}' and Period='{1}'", j, pricePeriod);
+                            string sql = string.Format("select count(*) from PriceData where Symbol='{0}' and Period='{1}'", j.mSymbolName, pricePeriod);
                             if (int.Parse(CSqliteDBHelp.getValue(sql).ToString()) == 0)
                             {
-                                sql = string.Format("insert into PriceData (Symbol,Period,Data) values ('{0}','{1}','{2}')", j, pricePeriod, JsonConvert.SerializeObject(priceData));
+                                sql = string.Format("insert into PriceData (Symbol,Period,Data) values ('{0}','{1}','{2}')", j.mSymbolName, pricePeriod, JsonConvert.SerializeObject(new CCandleDataWrap(priceData)));
                             }
                             else
                             {
-                                sql = string.Format("update PriceData set Period='{0}',Data='{1}'", pricePeriod, JsonConvert.SerializeObject(priceData));
+                                sql = string.Format("update PriceData set Data='{0}' where Symbol='{1}' and Period='{2}'", JsonConvert.SerializeObject(new CCandleDataWrap(priceData)), j.mSymbolName, pricePeriod);
                             }
                             CSqliteDBHelp.executeSql(sql);
                         }
@@ -252,8 +269,57 @@ namespace YeTrade
 
             string sql = string.Format("select Data from PriceData where Symbol='{0}' and Period='{1}'", symbol, period);
             string priceData = CSqliteDBHelp.getValue(sql).ToString();
-            re = JsonConvert.DeserializeObject<Dictionary<DateTime, CCandleData>>(priceData);
+            re = JsonConvert.DeserializeObject<CCandleDataWrap>(priceData).mPrice;
             return re;
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if(e.Node.Parent!=null)
+            {
+                foreach(var v in mSymbols.mSymbolNodeList)
+                {
+                    if(v.mSymbols.Exists(i=>i.mSymbolName == e.Node.Text))
+                    {
+                        CSymbolPro sp = v.mSymbols.First(i => i.mSymbolName == e.Node.Text);
+
+                        textBox1_symbolName.Text = sp.mSymbolName;
+                        textBox2_tickSize.Text = sp.mTickSize.ToString();
+                        textBox3_tickValue.Text = sp.mTickVal.ToString();
+                        textBox4_contractSize.Text = sp.mContractSize.ToString();
+                        textBox5_minVol.Text = sp.mMinVol.ToString();
+                        textBox6_maxVol.Text = sp.mMaxVol.ToString();
+                        textBox7_minStepVol.Text = sp.mStepVol.ToString();
+
+                    }
+                }
+            }
+        }
+
+        private void button1_saveSymbolPro_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode.Parent != null)
+            {
+                foreach (var v in mSymbols.mSymbolNodeList)
+                {
+                    if (v.mSymbols.Exists(i => i.mSymbolName == textBox1_symbolName.Text))
+                    {
+                        CSymbolPro sp = v.mSymbols.First(i => i.mSymbolName == textBox1_symbolName.Text);
+
+                        sp.mContractSize = double.Parse(textBox4_contractSize.Text.Trim());
+                        sp.mMaxVol = double.Parse(textBox6_maxVol.Text.Trim());
+                        sp.mMinVol = double.Parse(textBox5_minVol.Text.Trim());
+                        sp.mStepVol = double.Parse(textBox7_minStepVol.Text.Trim());
+                        sp.mSymbolName = textBox1_symbolName.Text.Trim();
+                        sp.mTickSize = double.Parse(textBox2_tickSize.Text.Trim());
+                        sp.mTickVal = double.Parse(textBox3_tickValue.Text.Trim());
+
+                    }
+                }
+
+                saveSymbol();
+                MessageBox.Show("保存成功");
+            }
         }
     }
 }

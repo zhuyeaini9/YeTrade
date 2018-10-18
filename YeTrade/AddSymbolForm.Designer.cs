@@ -43,8 +43,6 @@
             this.textBox6_maxVol = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox7_minStepVol = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox8_marginRadio = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1_symbolName
@@ -151,6 +149,7 @@
             this.textBox5_minVol.Name = "textBox5_minVol";
             this.textBox5_minVol.Size = new System.Drawing.Size(164, 26);
             this.textBox5_minVol.TabIndex = 11;
+            this.textBox5_minVol.Text = "0.01";
             this.textBox5_minVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
@@ -170,6 +169,7 @@
             this.textBox6_maxVol.Name = "textBox6_maxVol";
             this.textBox6_maxVol.Size = new System.Drawing.Size(164, 26);
             this.textBox6_maxVol.TabIndex = 13;
+            this.textBox6_maxVol.Text = "100000";
             this.textBox6_maxVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label7
@@ -189,26 +189,8 @@
             this.textBox7_minStepVol.Name = "textBox7_minStepVol";
             this.textBox7_minStepVol.Size = new System.Drawing.Size(164, 26);
             this.textBox7_minStepVol.TabIndex = 15;
+            this.textBox7_minStepVol.Text = "0.01";
             this.textBox7_minStepVol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(375, 170);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(104, 16);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "保证金比率：";
-            // 
-            // textBox8_marginRadio
-            // 
-            this.textBox8_marginRadio.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8_marginRadio.Location = new System.Drawing.Point(485, 167);
-            this.textBox8_marginRadio.Name = "textBox8_marginRadio";
-            this.textBox8_marginRadio.Size = new System.Drawing.Size(164, 26);
-            this.textBox8_marginRadio.TabIndex = 17;
-            this.textBox8_marginRadio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // AddSymbolForm
             // 
@@ -216,8 +198,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Teal;
             this.ClientSize = new System.Drawing.Size(737, 370);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox8_marginRadio);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox7_minStepVol);
             this.Controls.Add(this.label6);
@@ -258,7 +238,5 @@
         private System.Windows.Forms.TextBox textBox6_maxVol;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox7_minStepVol;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox8_marginRadio;
     }
 }

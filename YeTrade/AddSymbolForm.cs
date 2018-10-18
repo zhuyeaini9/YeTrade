@@ -23,7 +23,6 @@ namespace YeTrade
         {
             CSymbolPro s = new CSymbolPro();
             s.mContractSize = double.Parse(textBox4_contractSize.Text.Trim());
-            s.mMarginRadio = double.Parse(textBox8_marginRadio.Text.Trim());
             s.mMaxVol = double.Parse(textBox6_maxVol.Text.Trim());
             s.mMinVol = double.Parse(textBox5_minVol.Text.Trim());
             s.mStepVol = double.Parse(textBox7_minStepVol.Text.Trim());
