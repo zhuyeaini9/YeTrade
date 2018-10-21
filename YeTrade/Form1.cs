@@ -19,7 +19,7 @@ namespace YeTrade
         ContextMenu mMenu = new ContextMenu();
 
         public CSymbolTree mSymbols = new CSymbolTree();
-
+        public CBreakStrategy mBs = new CBreakStrategy();
         public void loadSymbol()
         {
             string sql = "select Data from Config where Id=1";
@@ -137,6 +137,7 @@ namespace YeTrade
                 CSymbolNode sn = mSymbols.mSymbolNodeList.FirstOrDefault(i => i.mTypeName == nodeName);
                 if(sn!=null)
                 {
+                    symbol.mSymbolTypeName = nodeName;
                     sn.mSymbols.Add(symbol);
                 }
             }
@@ -170,15 +171,15 @@ namespace YeTrade
         {
             button1_test.Enabled = false;
 
-            CBreakStrategy bs = new CBreakStrategy();
-            bs.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
-            bs.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
-            bs.mCloseStopAtr = double.Parse(textBox2_closeStopAtr.Text.Trim());
-            bs.mImeStopAtr = double.Parse(textBox3_imeStopAtr.Text.Trim());
-            bs.mLeverage = double.Parse(textBox1_leverage.Text.Trim());
-            bs.mMoney = double.Parse(textBox7_money.Text.Trim());
-            bs.mRisk = double.Parse(textBox6_risk.Text.Trim());
-            bs.mSymbolCount = mSymbols.mSymbolNodeList.Sum(i => i.mSymbols.Count);
+            mBs = new CBreakStrategy();
+            mBs.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
+            mBs.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
+            mBs.mCloseStopAtr = double.Parse(textBox2_closeStopAtr.Text.Trim());
+            mBs.mImeStopAtr = double.Parse(textBox3_imeStopAtr.Text.Trim());
+            mBs.mLeverage = double.Parse(textBox1_leverage.Text.Trim());
+            mBs.mMoney = double.Parse(textBox7_money.Text.Trim());
+            mBs.mRisk = double.Parse(textBox6_risk.Text.Trim());
+            mBs.mSymbolCount = mSymbols.mSymbolNodeList.Sum(i => i.mSymbols.Count);
 
             DateTime startTime = dateTimePicker1_start.Value.Date;
             DateTime endTime = dateTimePicker2_end.Value.Date;
@@ -199,6 +200,8 @@ namespace YeTrade
             progressBar1_test.Value = 0;
             progressBar1_test.Maximum = (endTime - startTime).Days;
 
+            mBs.initHuiChe(startTime);
+
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 do
@@ -209,8 +212,10 @@ namespace YeTrade
                     }));
                     foreach (var v in symbols)
                     {
-                        v.Value.step(startTime, bs);
+                        v.Value.step(startTime, mBs);
                     }
+                    mBs.addMoneyLine(startTime);
+
                     startTime = startTime.AddDays(1);
                 }
                 while (startTime.Date != endTime.Date);
@@ -218,9 +223,10 @@ namespace YeTrade
                 Invoke(new Action(() =>
                 {
                     button1_test.Enabled = true;
+                    button1_tongji.Enabled = true;
                 }));
 
-                Log4netHelper.LogInfo("money:" + bs.mMoney.ToString("F2"));
+                Log4netHelper.LogInfo("money:" + mBs.mMoney.ToString("F2"));
             }));
 
             thread.IsBackground = true;
@@ -334,6 +340,12 @@ namespace YeTrade
                 saveSymbol();
                 MessageBox.Show("保存成功");
             }
+        }
+
+        private void button1_tongji_Click(object sender, EventArgs e)
+        {
+            ChartForm cf = new ChartForm(mBs);
+            cf.ShowDialog();
         }
     }
 }

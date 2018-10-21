@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("非农商品");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("农商品");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("外汇");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("指数");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("加密货币");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("债券&利率");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("非农商品");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("农商品");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("外汇");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("指数");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("加密货币");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("债券&利率");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -81,6 +81,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1_breakPeriod = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1_tongji = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -115,25 +116,25 @@
             this.treeView1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "节点0";
-            treeNode1.Text = "非农商品";
-            treeNode2.Name = "节点1";
-            treeNode2.Text = "农商品";
-            treeNode3.Name = "节点2";
-            treeNode3.Text = "外汇";
-            treeNode4.Name = "节点3";
-            treeNode4.Text = "指数";
-            treeNode5.Name = "节点4";
-            treeNode5.Text = "加密货币";
-            treeNode6.Name = "节点5";
-            treeNode6.Text = "债券&利率";
+            treeNode13.Name = "节点0";
+            treeNode13.Text = "非农商品";
+            treeNode14.Name = "节点1";
+            treeNode14.Text = "农商品";
+            treeNode15.Name = "节点2";
+            treeNode15.Text = "外汇";
+            treeNode16.Name = "节点3";
+            treeNode16.Text = "指数";
+            treeNode17.Name = "节点4";
+            treeNode17.Text = "加密货币";
+            treeNode18.Name = "节点5";
+            treeNode18.Text = "债券&利率";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode13,
+            treeNode14,
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18});
             this.treeView1.Size = new System.Drawing.Size(214, 604);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -168,6 +169,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.Teal;
+            this.splitContainer2.Panel2.Controls.Add(this.button1_tongji);
             this.splitContainer2.Panel2.Controls.Add(this.progressBar1_test);
             this.splitContainer2.Panel2.Controls.Add(this.textBox1_leverage);
             this.splitContainer2.Panel2.Controls.Add(this.label12);
@@ -347,7 +349,7 @@
             // 
             // progressBar1_test
             // 
-            this.progressBar1_test.Location = new System.Drawing.Point(404, 211);
+            this.progressBar1_test.Location = new System.Drawing.Point(404, 170);
             this.progressBar1_test.Name = "progressBar1_test";
             this.progressBar1_test.Size = new System.Drawing.Size(326, 23);
             this.progressBar1_test.TabIndex = 29;
@@ -398,7 +400,7 @@
             this.textBox8_atrPeriod.Name = "textBox8_atrPeriod";
             this.textBox8_atrPeriod.Size = new System.Drawing.Size(98, 26);
             this.textBox8_atrPeriod.TabIndex = 24;
-            this.textBox8_atrPeriod.Text = "50";
+            this.textBox8_atrPeriod.Text = "14";
             // 
             // label9
             // 
@@ -489,7 +491,7 @@
             // button1_test
             // 
             this.button1_test.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1_test.Location = new System.Drawing.Point(306, 201);
+            this.button1_test.Location = new System.Drawing.Point(309, 163);
             this.button1_test.Name = "button1_test";
             this.button1_test.Size = new System.Drawing.Size(85, 35);
             this.button1_test.TabIndex = 15;
@@ -504,7 +506,7 @@
             this.textBox7_money.Name = "textBox7_money";
             this.textBox7_money.Size = new System.Drawing.Size(98, 26);
             this.textBox7_money.TabIndex = 14;
-            this.textBox7_money.Text = "20000";
+            this.textBox7_money.Text = "200000";
             // 
             // label6
             // 
@@ -523,7 +525,7 @@
             this.textBox6_risk.Name = "textBox6_risk";
             this.textBox6_risk.Size = new System.Drawing.Size(98, 26);
             this.textBox6_risk.TabIndex = 12;
-            this.textBox6_risk.Text = "10";
+            this.textBox6_risk.Text = "30";
             // 
             // label5
             // 
@@ -630,6 +632,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "突破周期：";
             // 
+            // button1_tongji
+            // 
+            this.button1_tongji.Enabled = false;
+            this.button1_tongji.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1_tongji.Location = new System.Drawing.Point(309, 206);
+            this.button1_tongji.Name = "button1_tongji";
+            this.button1_tongji.Size = new System.Drawing.Size(85, 35);
+            this.button1_tongji.TabIndex = 30;
+            this.button1_tongji.Text = "统计";
+            this.button1_tongji.UseVisualStyleBackColor = true;
+            this.button1_tongji.Click += new System.EventHandler(this.button1_tongji_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -704,6 +718,7 @@
         private System.Windows.Forms.TextBox textBox2_tickSize;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox1_symbolName;
+        private System.Windows.Forms.Button button1_tongji;
     }
 }
 

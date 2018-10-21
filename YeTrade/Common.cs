@@ -69,6 +69,7 @@ namespace YeTrade
 
     public class CSymbolPro
     {
+        public string mSymbolTypeName;
         public string mSymbolName;
         //1手的量变化最小变化点位(tickSize)对应的金额
         public double mTickVal;
@@ -111,6 +112,81 @@ namespace YeTrade
         public double mMoney;
         //总品种数
         public int mSymbolCount;
+
+        public void initHuiChe(DateTime t)
+        {
+            mHuiChe.init(mMoney, t);
+        }
+        public void changeMoney(DateTime t,string symbolType,string symbol,double profit)
+        {
+            mMoney += profit;
+
+            mProfitChange.Add(new CProfitChange(symbolType,symbol, t, profit));
+            mHuiChe.update(mMoney, t);
+        }
+
+        public void addMoneyLine(DateTime t)
+        {
+            mMoneyLine[t] = mMoney;
+        }
+        public Dictionary<DateTime, double> mMoneyLine = new Dictionary<DateTime, double>();
+        public CHuiChe mHuiChe = new CHuiChe();
+        public List<CProfitChange> mProfitChange = new List<CProfitChange>();
+    }
+    public class CProfitChange
+    {
+        public string mSymbolType;
+        public string mSymbol;
+        public DateTime mTime;
+        public double mProfit;
+        public CProfitChange(string st,string s,DateTime d,double p)
+        {
+            mSymbolType = st;
+            mSymbol = s;
+            mTime = d;
+            mProfit = p;
+        }
+    }
+    public class CHuiChe
+    {
+        public double mHuiCheRadio;
+        public DateTime mHighTime;
+        public DateTime mLowTime;
+
+        double mHighMoney;
+        public DateTime mHighMoneyTime;
+
+        public CHuiChe()
+        {
+            mHighMoney = 0;
+            mHuiCheRadio = 0;
+        }
+        public void init(double m,DateTime t)
+        {
+            mHuiCheRadio = 0;
+            mHighTime = t;
+            mLowTime = t;
+            mHighMoney = m;
+            mHighMoneyTime = t;
+        }
+        public void update(double curMoney,DateTime curTime)
+        {
+            if(curMoney>mHighMoney)
+            {
+                mHighMoneyTime = curTime;
+                mHighMoney = curMoney;
+            }
+            else
+            {
+                double huiChe = (mHighMoney - curMoney) / mHighMoney;
+                if(huiChe>mHuiCheRadio)
+                {
+                    mHuiCheRadio = huiChe;
+                    mLowTime = curTime;
+                    mHighTime = mHighMoneyTime;
+                }
+            }
+        }
     }
     public class CSymbol
     {
@@ -288,7 +364,8 @@ namespace YeTrade
                         {
                             stop = true;
                             double profit = calLoss(mVol, mImeStopPrice - mTradePrice,curTime);
-                            bs.mMoney += profit;
+                            bs.changeMoney(curTime, mPro.mSymbolTypeName, mPro.mSymbolName, profit);
+
                             Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at ime price:" + mImeStopPrice.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:"+bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
@@ -297,7 +374,8 @@ namespace YeTrade
                         {
                             stop = true;
                             double profit = calLoss(mVol, prePrice.c - mTradePrice,curTime);
-                            bs.mMoney += profit;
+                            bs.changeMoney(curTime, mPro.mSymbolTypeName, mPro.mSymbolName, profit);
+
                             Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " buy stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:" + bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
@@ -320,7 +398,8 @@ namespace YeTrade
                         {
                             stop = true;
                             double profit = calLoss(mVol, mTradePrice - mImeStopPrice,curTime);
-                            bs.mMoney += profit;
+                            bs.changeMoney(curTime, mPro.mSymbolTypeName, mPro.mSymbolName, profit);
+
                             Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at ime price:" + mImeStopPrice.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:" + bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
@@ -329,7 +408,8 @@ namespace YeTrade
                         {
                             stop = true;
                             double profit = calLoss(mVol, mTradePrice - prePrice.c,curTime);
-                            bs.mMoney += profit;
+                            bs.changeMoney(curTime, mPro.mSymbolTypeName, mPro.mSymbolName, profit);
+
                             Log4netHelper.LogInfo("symbol:" + mPro.mSymbolName + " sell stop at close price:" + prePrice.c.ToString("F2") + " profit:" + profit.ToString("F2")
                                 + " all_money:" + bs.mMoney.ToString("F2")
                                 + " time:" + curTime.ToShortDateString());
