@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -45,6 +45,9 @@
             this.button1_tongji = new System.Windows.Forms.Button();
             this.dateTimePicker2_end = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1_start = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2_money = new System.Windows.Forms.Label();
+            this.label2_BS = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,11 +66,11 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(812, 402);
@@ -104,6 +107,9 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.label2_BS);
+            this.splitContainer2.Panel2.Controls.Add(this.label2_money);
+            this.splitContainer2.Panel2.Controls.Add(this.label1);
             this.splitContainer2.Panel2.Controls.Add(this.label2_lowTime);
             this.splitContainer2.Panel2.Controls.Add(this.label1_hightime);
             this.splitContainer2.Panel2.Controls.Add(this.label1_huiche);
@@ -116,19 +122,21 @@
             // 
             this.label2_lowTime.AutoSize = true;
             this.label2_lowTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2_lowTime.Location = new System.Drawing.Point(13, 132);
+            this.label2_lowTime.Location = new System.Drawing.Point(13, 115);
             this.label2_lowTime.Name = "label2_lowTime";
-            this.label2_lowTime.Size = new System.Drawing.Size(0, 16);
+            this.label2_lowTime.Size = new System.Drawing.Size(64, 16);
             this.label2_lowTime.TabIndex = 32;
+            this.label2_lowTime.Text = "lowtime";
             // 
             // label1_hightime
             // 
             this.label1_hightime.AutoSize = true;
             this.label1_hightime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1_hightime.Location = new System.Drawing.Point(13, 97);
+            this.label1_hightime.Location = new System.Drawing.Point(13, 86);
             this.label1_hightime.Name = "label1_hightime";
-            this.label1_hightime.Size = new System.Drawing.Size(0, 16);
+            this.label1_hightime.Size = new System.Drawing.Size(72, 16);
             this.label1_hightime.TabIndex = 31;
+            this.label1_hightime.Text = "hightime";
             // 
             // label1_huiche
             // 
@@ -172,12 +180,12 @@
             // 
             // chart2
             // 
-            chartArea2.AxisX.MajorGrid.LineWidth = 0;
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.MajorGrid.LineWidth = 0;
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(0, 0);
             this.chart2.Name = "chart2";
             this.chart2.Size = new System.Drawing.Size(812, 245);
@@ -222,6 +230,36 @@
             this.dateTimePicker1_start.TabIndex = 21;
             this.dateTimePicker1_start.Value = new System.DateTime(2005, 3, 1, 0, 0, 0, 0);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(13, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "资金：";
+            // 
+            // label2_money
+            // 
+            this.label2_money.AutoSize = true;
+            this.label2_money.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2_money.Location = new System.Drawing.Point(113, 21);
+            this.label2_money.Name = "label2_money";
+            this.label2_money.Size = new System.Drawing.Size(24, 16);
+            this.label2_money.TabIndex = 34;
+            this.label2_money.Text = "0%";
+            // 
+            // label2_BS
+            // 
+            this.label2_BS.AutoSize = true;
+            this.label2_BS.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2_BS.Location = new System.Drawing.Point(13, 177);
+            this.label2_BS.Name = "label2_BS";
+            this.label2_BS.Size = new System.Drawing.Size(40, 16);
+            this.label2_BS.TabIndex = 35;
+            this.label2_BS.Text = "策略";
+            // 
             // ChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -265,5 +303,8 @@
         private System.Windows.Forms.Label label1_huiche;
         private System.Windows.Forms.Label label2_lowTime;
         private System.Windows.Forms.Label label1_hightime;
+        private System.Windows.Forms.Label label2_money;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2_BS;
     }
 }

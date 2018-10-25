@@ -19,7 +19,18 @@ namespace YeTrade
             mBs = bs;
             InitializeComponent();
         }
+        string getCheLvText()
+        {
+            string re = "";
 
+            re = string.Format("品种数量：{0}\n风险因子：{1}/{2}\n突破周期：{3}\nATR周期：{4}\n",mBs.mSymbolCount
+                ,(mBs.mRisk/mBs.mSymbolCount).ToString("F3")
+                , mBs.mRisk
+                ,mBs.mBreakPeriod
+                ,mBs.mAtrPeriod);
+
+            return re;
+        }
         private void ChartForm_Load(object sender, EventArgs e)
         {
             comboBox1_symbolType.Items.Add("全部");
@@ -32,9 +43,12 @@ namespace YeTrade
 
             comboBox1_symbolType.SelectedIndex = 0;
 
+            label2_money.Text = (mBs.mMoney).ToString("F4");
             label1_huiche.Text = (mBs.mHuiChe.mHuiCheRadio * 100).ToString("F4");
             label1_hightime.Text = mBs.mHuiChe.mHighTime.ToShortDateString();
             label2_lowTime.Text = mBs.mHuiChe.mLowTime.ToShortDateString();
+
+            label2_BS.Text = getCheLvText();
 
             Series moneyLineSe = new Series();
             moneyLineSe.ChartType = SeriesChartType.Line;

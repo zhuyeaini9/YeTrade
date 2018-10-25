@@ -84,15 +84,6 @@ namespace YeTrade
         //最小变化手数
         public double mStepVol;
     }
-    public class CSymbolNode
-    {
-        public string mTypeName;
-        public List<CSymbolPro> mSymbols = new List<CSymbolPro>();
-    }
-    public class CSymbolTree
-    {
-        public List<CSymbolNode> mSymbolNodeList = new List<CSymbolNode>();
-    }
 
     public class CBreakStrategy
     {
@@ -112,6 +103,10 @@ namespace YeTrade
         public double mMoney;
         //总品种数
         public int mSymbolCount;
+        //均线
+        public int mAveFilterSmall;
+        public int mAveFilterBig;
+        public bool mUseAveFilter;
 
         public void initHuiChe(DateTime t)
         {
@@ -299,6 +294,59 @@ namespace YeTrade
 
             return re;
         }
+        public bool collectPrice(CBreakStrategy bs,OHLC prePrice)
+        {
+            if (mPriceList.Count < bs.mBreakPeriod - 1 
+                || mPriceList.Count < bs.mAtrPeriod - 1
+                || mPriceList.Count < bs.mAveFilterSmall - 1
+                || mPriceList.Count < bs.mAveFilterBig - 1)
+            {
+                mPriceList.Add(prePrice);
+                return true;
+            }
+            return false;
+        }
+        int getMaxPeriod(CBreakStrategy bs)
+        {
+            List<int> ps = new List<int>();
+            ps.Add(bs.mAtrPeriod);
+            ps.Add(bs.mBreakPeriod);
+            ps.Add(bs.mAveFilterSmall);
+            ps.Add(bs.mAveFilterBig);
+            return ps.Max();
+        }
+        double ave(int period)
+        {
+            double re = 0;
+            List<OHLC> atrList = mPriceList.Skip(Math.Max(0, mPriceList.Count() - period)).ToList();
+            List<double> mtr = new List<double>();
+            foreach(var v in atrList)
+            {
+                mtr.Add(v.c);
+            }
+            re = mtr.Average();
+            return re;
+        }
+        bool checkAveFilter(CBreakStrategy bs,int buyOrSell)
+        {
+            if (!bs.mUseAveFilter)
+                return true;
+
+            bool re = false;
+
+            double min = ave(bs.mAveFilterSmall);
+            double max = ave(bs.mAveFilterBig);
+
+            if(buyOrSell == 1 && min>=max)
+            {
+                re = true;
+            }
+            if (buyOrSell == -1 && min <= max)
+            {
+                re = true;
+            }
+            return re;
+        }
         public void step(DateTime curTime,CBreakStrategy bs)
         {
             if (!mCandleData.Keys.Contains(curTime.Date))
@@ -306,15 +354,11 @@ namespace YeTrade
 
             OHLC prePrice = mCandleData[curTime].mPrice;
 
-            if (mPriceList.Count < bs.mBreakPeriod - 1 || mPriceList.Count < bs.mAtrPeriod - 1)
-            {
-                mPriceList.Add(prePrice);
-            }
-            else
+            if(!collectPrice(bs,prePrice))
             {
                 mPriceList.Add(prePrice);
 
-                int bigPeriod = bs.mBreakPeriod > bs.mAtrPeriod ? bs.mBreakPeriod : bs.mAtrPeriod;
+                int bigPeriod = getMaxPeriod(bs);
                 while (mPriceList.Count > bigPeriod)
                     mPriceList.RemoveAt(0);
 
@@ -323,7 +367,7 @@ namespace YeTrade
                 if (!mHasVol)
                 {
                     int breakRe = checkBreak(bs);
-                    if(breakRe == 1)
+                    if(breakRe == 1 && checkAveFilter(bs,breakRe))
                     {
                         //break open vol buy
                         mBuyOrSell = 1;
@@ -338,7 +382,7 @@ namespace YeTrade
 
                         Log4netHelper.LogInfo("symbol:"+mPro.mSymbolName+" buy:" + mVol.ToString("F2") + " price:" + mTradePrice.ToString("F2") + " time:" + curTime.ToShortDateString());
                     }
-                    if(breakRe == -1)
+                    if(breakRe == -1 && checkAveFilter(bs, breakRe))
                     {
                         //break open vol sell
                         mBuyOrSell = -1;

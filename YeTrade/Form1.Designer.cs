@@ -28,12 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("非农商品");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("农商品");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("外汇");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("指数");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("加密货币");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("债券&利率");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -52,6 +46,7 @@
             this.textBox2_tickSize = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox1_symbolName = new System.Windows.Forms.TextBox();
+            this.button1_tongji = new System.Windows.Forms.Button();
             this.progressBar1_test = new System.Windows.Forms.ProgressBar();
             this.textBox1_leverage = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -71,9 +66,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox6_risk = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.checkBox1_averageFilter = new System.Windows.Forms.CheckBox();
+            this.textBox5_aveBig = new System.Windows.Forms.TextBox();
+            this.textBox4_aveSmall = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox3_imeStopAtr = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -81,7 +76,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1_breakPeriod = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1_tongji = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -112,31 +106,14 @@
             // treeView1
             // 
             this.treeView1.BackColor = System.Drawing.Color.Teal;
+            this.treeView1.CheckBoxes = true;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode13.Name = "节点0";
-            treeNode13.Text = "非农商品";
-            treeNode14.Name = "节点1";
-            treeNode14.Text = "农商品";
-            treeNode15.Name = "节点2";
-            treeNode15.Text = "外汇";
-            treeNode16.Name = "节点3";
-            treeNode16.Text = "指数";
-            treeNode17.Name = "节点4";
-            treeNode17.Text = "加密货币";
-            treeNode18.Name = "节点5";
-            treeNode18.Text = "债券&利率";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode13,
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17,
-            treeNode18});
             this.treeView1.Size = new System.Drawing.Size(214, 604);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -189,9 +166,9 @@
             this.splitContainer2.Panel2.Controls.Add(this.label6);
             this.splitContainer2.Panel2.Controls.Add(this.textBox6_risk);
             this.splitContainer2.Panel2.Controls.Add(this.label5);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox1);
-            this.splitContainer2.Panel2.Controls.Add(this.textBox5);
-            this.splitContainer2.Panel2.Controls.Add(this.textBox4);
+            this.splitContainer2.Panel2.Controls.Add(this.checkBox1_averageFilter);
+            this.splitContainer2.Panel2.Controls.Add(this.textBox5_aveBig);
+            this.splitContainer2.Panel2.Controls.Add(this.textBox4_aveSmall);
             this.splitContainer2.Panel2.Controls.Add(this.label2);
             this.splitContainer2.Panel2.Controls.Add(this.textBox3_imeStopAtr);
             this.splitContainer2.Panel2.Controls.Add(this.label4);
@@ -346,6 +323,18 @@
             this.textBox1_symbolName.Size = new System.Drawing.Size(164, 26);
             this.textBox1_symbolName.TabIndex = 17;
             this.textBox1_symbolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button1_tongji
+            // 
+            this.button1_tongji.Enabled = false;
+            this.button1_tongji.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1_tongji.Location = new System.Drawing.Point(309, 206);
+            this.button1_tongji.Name = "button1_tongji";
+            this.button1_tongji.Size = new System.Drawing.Size(85, 35);
+            this.button1_tongji.TabIndex = 30;
+            this.button1_tongji.Text = "统计";
+            this.button1_tongji.UseVisualStyleBackColor = true;
+            this.button1_tongji.Click += new System.EventHandler(this.button1_tongji_Click);
             // 
             // progressBar1_test
             // 
@@ -537,33 +526,33 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "总风险因子：";
             // 
-            // checkBox1
+            // checkBox1_averageFilter
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox1.Location = new System.Drawing.Point(306, 75);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1_averageFilter.AutoSize = true;
+            this.checkBox1_averageFilter.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBox1_averageFilter.Location = new System.Drawing.Point(306, 75);
+            this.checkBox1_averageFilter.Name = "checkBox1_averageFilter";
+            this.checkBox1_averageFilter.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1_averageFilter.TabIndex = 10;
+            this.checkBox1_averageFilter.UseVisualStyleBackColor = true;
             // 
-            // textBox5
+            // textBox5_aveBig
             // 
-            this.textBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(471, 69);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(46, 26);
-            this.textBox5.TabIndex = 9;
-            this.textBox5.Text = "100";
+            this.textBox5_aveBig.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox5_aveBig.Location = new System.Drawing.Point(471, 69);
+            this.textBox5_aveBig.Name = "textBox5_aveBig";
+            this.textBox5_aveBig.Size = new System.Drawing.Size(46, 26);
+            this.textBox5_aveBig.TabIndex = 9;
+            this.textBox5_aveBig.Text = "100";
             // 
-            // textBox4
+            // textBox4_aveSmall
             // 
-            this.textBox4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(419, 69);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(46, 26);
-            this.textBox4.TabIndex = 8;
-            this.textBox4.Text = "20";
+            this.textBox4_aveSmall.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox4_aveSmall.Location = new System.Drawing.Point(419, 69);
+            this.textBox4_aveSmall.Name = "textBox4_aveSmall";
+            this.textBox4_aveSmall.Size = new System.Drawing.Size(46, 26);
+            this.textBox4_aveSmall.TabIndex = 8;
+            this.textBox4_aveSmall.Text = "20";
             // 
             // label2
             // 
@@ -620,7 +609,7 @@
             this.textBox1_breakPeriod.Name = "textBox1_breakPeriod";
             this.textBox1_breakPeriod.Size = new System.Drawing.Size(98, 26);
             this.textBox1_breakPeriod.TabIndex = 1;
-            this.textBox1_breakPeriod.Text = "50";
+            this.textBox1_breakPeriod.Text = "100";
             // 
             // label1
             // 
@@ -631,18 +620,6 @@
             this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "突破周期：";
-            // 
-            // button1_tongji
-            // 
-            this.button1_tongji.Enabled = false;
-            this.button1_tongji.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1_tongji.Location = new System.Drawing.Point(309, 206);
-            this.button1_tongji.Name = "button1_tongji";
-            this.button1_tongji.Size = new System.Drawing.Size(85, 35);
-            this.button1_tongji.TabIndex = 30;
-            this.button1_tongji.Text = "统计";
-            this.button1_tongji.UseVisualStyleBackColor = true;
-            this.button1_tongji.Click += new System.EventHandler(this.button1_tongji_Click);
             // 
             // Form1
             // 
@@ -678,9 +655,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox6_risk;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.CheckBox checkBox1_averageFilter;
+        private System.Windows.Forms.TextBox textBox5_aveBig;
+        private System.Windows.Forms.TextBox textBox4_aveSmall;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox3_imeStopAtr;
         private System.Windows.Forms.Label label4;
