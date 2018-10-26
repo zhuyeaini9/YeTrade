@@ -24,11 +24,14 @@ namespace YeTrade
             string re = "";
 
             re = string.Format("品种数量：{0}\n风险因子：{1}/{2}\n突破周期：{3}\nATR周期：{4}\n",mBs.mSymbolCount
-                ,(mBs.mRisk/mBs.mSymbolCount).ToString("F3")
-                , mBs.mRisk
+                ,(mBs.mRisk/mBs.mSymbolCount).ToString("F3")+"%"
+                , mBs.mRisk+"%"
                 ,mBs.mBreakPeriod
                 ,mBs.mAtrPeriod);
-
+            if(mBs.mUseAveFilter)
+            {
+                re += string.Format("均线过滤：{0}-{1}\n", mBs.mAveFilterSmall, mBs.mAveFilterBig);
+            }
             return re;
         }
         private void ChartForm_Load(object sender, EventArgs e)
@@ -43,10 +46,15 @@ namespace YeTrade
 
             comboBox1_symbolType.SelectedIndex = 0;
 
-            label2_money.Text = (mBs.mMoney).ToString("F4");
+            double shouyi = ((mBs.mMoney - mBs.mInitMoney) / mBs.mInitMoney * 100);
+            label2_money.Text = (mBs.mMoney).ToString("F2") + " " + shouyi.ToString("F2") + "%";
             label1_huiche.Text = (mBs.mHuiChe.mHuiCheRadio * 100).ToString("F4");
             label1_hightime.Text = mBs.mHuiChe.mHighTime.ToShortDateString();
             label2_lowTime.Text = mBs.mHuiChe.mLowTime.ToShortDateString();
+
+            double allTime = ((mBs.mEndTime - mBs.mStartTime).TotalDays / 365);
+            label3_allTime.Text = allTime.ToString("F2") + "年" + "\n" + mBs.mStartTime.ToShortDateString() + "\n" + mBs.mEndTime.ToShortDateString();
+            label4_profitAnnual.Text = ((Math.Pow(mBs.mMoney/mBs.mInitMoney,1/allTime)-1)*100.0f).ToString("F2") + "%";
 
             label2_BS.Text = getCheLvText();
 

@@ -19,7 +19,6 @@ namespace YeTrade
         ContextMenu mMenu = new ContextMenu();
 
         List<CSymbolPro> mSymbolList = new List<CSymbolPro>();
-        public CBreakStrategy mBs = new CBreakStrategy();
         public void loadSymbol()
         {
             string sql = "select Data from Config where Id=2";
@@ -103,6 +102,7 @@ namespace YeTrade
             string nodeName = curSelNode.Text;
             if (curSelNode != null)
             {
+                symbol.mSymbolTypeName = nodeName;
                 curSelNode.Nodes.Add(symbol.mSymbolName);
                 curSelNode.ExpandAll();
 
@@ -138,20 +138,24 @@ namespace YeTrade
         {
             button1_test.Enabled = false;
 
-            mBs = new CBreakStrategy();
-            mBs.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
-            mBs.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
-            mBs.mCloseStopAtr = double.Parse(textBox2_closeStopAtr.Text.Trim());
-            mBs.mImeStopAtr = double.Parse(textBox3_imeStopAtr.Text.Trim());
-            mBs.mLeverage = double.Parse(textBox1_leverage.Text.Trim());
-            mBs.mMoney = double.Parse(textBox7_money.Text.Trim());
-            mBs.mRisk = double.Parse(textBox6_risk.Text.Trim());
-            mBs.mAveFilterSmall = int.Parse(textBox4_aveSmall.Text.Trim());
-            mBs.mAveFilterBig = int.Parse(textBox5_aveBig.Text.Trim());
-            mBs.mUseAveFilter = checkBox1_averageFilter.Checked;
+            CBreakStrategy BS = new CBreakStrategy();
+            BS.mAtrPeriod = int.Parse(textBox8_atrPeriod.Text.Trim());
+            BS.mBreakPeriod = int.Parse(textBox1_breakPeriod.Text.Trim());
+            BS.mCloseStopAtr = double.Parse(textBox2_closeStopAtr.Text.Trim());
+            BS.mImeStopAtr = double.Parse(textBox3_imeStopAtr.Text.Trim());
+            BS.mLeverage = double.Parse(textBox1_leverage.Text.Trim());
+            BS.mMoney = double.Parse(textBox7_money.Text.Trim());
+            BS.mInitMoney = BS.mMoney;
+            BS.mRisk = double.Parse(textBox6_risk.Text.Trim());
+            BS.mAveFilterSmall = int.Parse(textBox4_aveSmall.Text.Trim());
+            BS.mAveFilterBig = int.Parse(textBox5_aveBig.Text.Trim());
+            BS.mUseAveFilter = checkBox1_averageFilter.Checked;
 
             DateTime startTime = dateTimePicker1_start.Value.Date;
             DateTime endTime = dateTimePicker2_end.Value.Date;
+
+            BS.mStartTime = startTime;
+            BS.mEndTime = endTime;
 
             Dictionary<string, CSymbol> symbols = new Dictionary<string, CSymbol>();
             List<CSymbolPro> selSym = getSelSymbol();
@@ -164,15 +168,29 @@ namespace YeTrade
                 symbols[s.mPro.mSymbolName] = s;
             }
 
-            mBs.mSymbolCount = symbols.Count;
+            BS.mSymbolCount = symbols.Count;
 
-            progressBar1_test.Value = 0;
-            progressBar1_test.Maximum = (endTime - startTime).Days;
+            if (int.Parse(label21_taskCount.Text.Trim()) == 0)
+            {
+                progressBar1_test.Value = 0;
+                progressBar1_test.Maximum = (endTime - startTime).Days;
+            }
+            else
+            {
+                progressBar1_test.Maximum += (endTime - startTime).Days;
+            }
 
-            mBs.initHuiChe(startTime);
+            BS.initHuiChe(startTime);
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
+                Invoke(new Action(() =>
+                {
+                    int taskCount = int.Parse(label21_taskCount.Text.Trim());
+                    taskCount++;
+                    label21_taskCount.Text = taskCount.ToString();
+                }));
+
                 do
                 {
                     Invoke(new Action(() =>
@@ -181,9 +199,9 @@ namespace YeTrade
                     }));
                     foreach (var v in symbols)
                     {
-                        v.Value.step(startTime, mBs);
+                        v.Value.step(startTime, BS);
                     }
-                    mBs.addMoneyLine(startTime);
+                    BS.addMoneyLine(startTime);
 
                     startTime = startTime.AddDays(1);
                 }
@@ -191,16 +209,24 @@ namespace YeTrade
 
                 Invoke(new Action(() =>
                 {
-                    button1_test.Enabled = true;
-                    button1_tongji.Enabled = true;
+                    ChartForm cf = new ChartForm(BS);
+                    cf.Show();
+
+                    int taskCount = int.Parse(label21_taskCount.Text.Trim());
+                    taskCount--;
+                    label21_taskCount.Text = taskCount.ToString();
                 }));
 
-                Log4netHelper.LogInfo("money:" + mBs.mMoney.ToString("F2"));
+                Log4netHelper.LogInfo("money:" + BS.mMoney.ToString("F2"));
             }));
 
             thread.IsBackground = true;
             thread.Start();
 
+            Invoke(new Action(() =>
+            {
+                button1_test.Enabled = true;
+            }));
         }
         List<CSymbolPro> getSelSymbol()
         {
@@ -319,11 +345,6 @@ namespace YeTrade
             }
         }
 
-        private void button1_tongji_Click(object sender, EventArgs e)
-        {
-            ChartForm cf = new ChartForm(mBs);
-            cf.ShowDialog();
-        }
         private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
         {
             foreach (TreeNode node in treeNode.Nodes)

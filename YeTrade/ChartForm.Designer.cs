@@ -28,13 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.label2_BS = new System.Windows.Forms.Label();
+            this.label2_money = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2_lowTime = new System.Windows.Forms.Label();
             this.label1_hightime = new System.Windows.Forms.Label();
             this.label1_huiche = new System.Windows.Forms.Label();
@@ -45,9 +48,12 @@
             this.button1_tongji = new System.Windows.Forms.Button();
             this.dateTimePicker2_end = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1_start = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2_money = new System.Windows.Forms.Label();
-            this.label2_BS = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3_allTime = new System.Windows.Forms.Label();
+            this.label4_profitAnnual = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -66,14 +72,14 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea9.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea9);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            legend9.Name = "Legend1";
+            this.chart1.Legends.Add(legend9);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(812, 402);
+            this.chart1.Size = new System.Drawing.Size(743, 402);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -107,6 +113,12 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.label4);
+            this.splitContainer2.Panel2.Controls.Add(this.label3);
+            this.splitContainer2.Panel2.Controls.Add(this.label4_profitAnnual);
+            this.splitContainer2.Panel2.Controls.Add(this.label5);
+            this.splitContainer2.Panel2.Controls.Add(this.label3_allTime);
+            this.splitContainer2.Panel2.Controls.Add(this.label2);
             this.splitContainer2.Panel2.Controls.Add(this.label2_BS);
             this.splitContainer2.Panel2.Controls.Add(this.label2_money);
             this.splitContainer2.Panel2.Controls.Add(this.label1);
@@ -115,14 +127,44 @@
             this.splitContainer2.Panel2.Controls.Add(this.label1_huiche);
             this.splitContainer2.Panel2.Controls.Add(this.label14);
             this.splitContainer2.Size = new System.Drawing.Size(1026, 402);
-            this.splitContainer2.SplitterDistance = 812;
+            this.splitContainer2.SplitterDistance = 743;
             this.splitContainer2.TabIndex = 1;
+            // 
+            // label2_BS
+            // 
+            this.label2_BS.AutoSize = true;
+            this.label2_BS.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2_BS.Location = new System.Drawing.Point(13, 251);
+            this.label2_BS.Name = "label2_BS";
+            this.label2_BS.Size = new System.Drawing.Size(40, 16);
+            this.label2_BS.TabIndex = 35;
+            this.label2_BS.Text = "策略";
+            // 
+            // label2_money
+            // 
+            this.label2_money.AutoSize = true;
+            this.label2_money.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2_money.Location = new System.Drawing.Point(113, 21);
+            this.label2_money.Name = "label2_money";
+            this.label2_money.Size = new System.Drawing.Size(16, 16);
+            this.label2_money.TabIndex = 34;
+            this.label2_money.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(13, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(88, 16);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "最终收益：";
             // 
             // label2_lowTime
             // 
             this.label2_lowTime.AutoSize = true;
             this.label2_lowTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2_lowTime.Location = new System.Drawing.Point(13, 115);
+            this.label2_lowTime.Location = new System.Drawing.Point(75, 198);
             this.label2_lowTime.Name = "label2_lowTime";
             this.label2_lowTime.Size = new System.Drawing.Size(64, 16);
             this.label2_lowTime.TabIndex = 32;
@@ -132,7 +174,7 @@
             // 
             this.label1_hightime.AutoSize = true;
             this.label1_hightime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1_hightime.Location = new System.Drawing.Point(13, 86);
+            this.label1_hightime.Location = new System.Drawing.Point(75, 173);
             this.label1_hightime.Name = "label1_hightime";
             this.label1_hightime.Size = new System.Drawing.Size(72, 16);
             this.label1_hightime.TabIndex = 31;
@@ -142,7 +184,7 @@
             // 
             this.label1_huiche.AutoSize = true;
             this.label1_huiche.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1_huiche.Location = new System.Drawing.Point(113, 52);
+            this.label1_huiche.Location = new System.Drawing.Point(113, 147);
             this.label1_huiche.Name = "label1_huiche";
             this.label1_huiche.Size = new System.Drawing.Size(24, 16);
             this.label1_huiche.TabIndex = 30;
@@ -152,7 +194,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(13, 52);
+            this.label14.Location = new System.Drawing.Point(13, 147);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(88, 16);
             this.label14.TabIndex = 29;
@@ -175,20 +217,20 @@
             this.splitContainer3.Panel2.Controls.Add(this.dateTimePicker2_end);
             this.splitContainer3.Panel2.Controls.Add(this.dateTimePicker1_start);
             this.splitContainer3.Size = new System.Drawing.Size(1026, 245);
-            this.splitContainer3.SplitterDistance = 812;
+            this.splitContainer3.SplitterDistance = 743;
             this.splitContainer3.TabIndex = 0;
             // 
             // chart2
             // 
-            chartArea4.AxisX.MajorGrid.LineWidth = 0;
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
+            chartArea10.AxisX.MajorGrid.LineWidth = 0;
+            chartArea10.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea10);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
+            legend10.Name = "Legend1";
+            this.chart2.Legends.Add(legend10);
             this.chart2.Location = new System.Drawing.Point(0, 0);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(812, 245);
+            this.chart2.Size = new System.Drawing.Size(743, 245);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
             // 
@@ -230,35 +272,65 @@
             this.dateTimePicker1_start.TabIndex = 21;
             this.dateTimePicker1_start.Value = new System.DateTime(2005, 3, 1, 0, 0, 0, 0);
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(13, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 16);
-            this.label1.TabIndex = 33;
-            this.label1.Text = "资金：";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(13, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 16);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "持续时间：";
             // 
-            // label2_money
+            // label3_allTime
             // 
-            this.label2_money.AutoSize = true;
-            this.label2_money.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2_money.Location = new System.Drawing.Point(113, 21);
-            this.label2_money.Name = "label2_money";
-            this.label2_money.Size = new System.Drawing.Size(24, 16);
-            this.label2_money.TabIndex = 34;
-            this.label2_money.Text = "0%";
+            this.label3_allTime.AutoSize = true;
+            this.label3_allTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3_allTime.Location = new System.Drawing.Point(113, 73);
+            this.label3_allTime.Name = "label3_allTime";
+            this.label3_allTime.Size = new System.Drawing.Size(16, 16);
+            this.label3_allTime.TabIndex = 37;
+            this.label3_allTime.Text = "0";
             // 
-            // label2_BS
+            // label4_profitAnnual
             // 
-            this.label2_BS.AutoSize = true;
-            this.label2_BS.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2_BS.Location = new System.Drawing.Point(13, 177);
-            this.label2_BS.Name = "label2_BS";
-            this.label2_BS.Size = new System.Drawing.Size(40, 16);
-            this.label2_BS.TabIndex = 35;
-            this.label2_BS.Text = "策略";
+            this.label4_profitAnnual.AutoSize = true;
+            this.label4_profitAnnual.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4_profitAnnual.Location = new System.Drawing.Point(129, 47);
+            this.label4_profitAnnual.Name = "label4_profitAnnual";
+            this.label4_profitAnnual.Size = new System.Drawing.Size(16, 16);
+            this.label4_profitAnnual.TabIndex = 39;
+            this.label4_profitAnnual.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(13, 47);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 16);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "复合年收益：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(13, 173);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 16);
+            this.label3.TabIndex = 40;
+            this.label3.Text = "高点：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(13, 198);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 16);
+            this.label4.TabIndex = 41;
+            this.label4.Text = "低点：";
             // 
             // ChartForm
             // 
@@ -306,5 +378,11 @@
         private System.Windows.Forms.Label label2_money;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2_BS;
+        private System.Windows.Forms.Label label4_profitAnnual;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3_allTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }

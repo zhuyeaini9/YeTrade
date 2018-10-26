@@ -99,14 +99,18 @@ namespace YeTrade
         public double mCloseStopAtr;
         //即时止损 atr
         public double mImeStopAtr;
-        //初始资金
+        //资金
         public double mMoney;
+        public double mInitMoney;
         //总品种数
         public int mSymbolCount;
         //均线
         public int mAveFilterSmall;
         public int mAveFilterBig;
         public bool mUseAveFilter;
+        //开始 结束 时间
+        public DateTime mStartTime;
+        public DateTime mEndTime;
 
         public void initHuiChe(DateTime t)
         {

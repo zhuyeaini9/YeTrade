@@ -46,7 +46,6 @@
             this.textBox2_tickSize = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox1_symbolName = new System.Windows.Forms.TextBox();
-            this.button1_tongji = new System.Windows.Forms.Button();
             this.progressBar1_test = new System.Windows.Forms.ProgressBar();
             this.textBox1_leverage = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -76,6 +75,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1_breakPeriod = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21_taskCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -146,7 +147,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.Teal;
-            this.splitContainer2.Panel2.Controls.Add(this.button1_tongji);
+            this.splitContainer2.Panel2.Controls.Add(this.label21_taskCount);
+            this.splitContainer2.Panel2.Controls.Add(this.label20);
             this.splitContainer2.Panel2.Controls.Add(this.progressBar1_test);
             this.splitContainer2.Panel2.Controls.Add(this.textBox1_leverage);
             this.splitContainer2.Panel2.Controls.Add(this.label12);
@@ -323,18 +325,6 @@
             this.textBox1_symbolName.Size = new System.Drawing.Size(164, 26);
             this.textBox1_symbolName.TabIndex = 17;
             this.textBox1_symbolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button1_tongji
-            // 
-            this.button1_tongji.Enabled = false;
-            this.button1_tongji.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1_tongji.Location = new System.Drawing.Point(309, 206);
-            this.button1_tongji.Name = "button1_tongji";
-            this.button1_tongji.Size = new System.Drawing.Size(85, 35);
-            this.button1_tongji.TabIndex = 30;
-            this.button1_tongji.Text = "统计";
-            this.button1_tongji.UseVisualStyleBackColor = true;
-            this.button1_tongji.Click += new System.EventHandler(this.button1_tongji_Click);
             // 
             // progressBar1_test
             // 
@@ -621,6 +611,26 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "突破周期：";
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(306, 215);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 16);
+            this.label20.TabIndex = 30;
+            this.label20.Text = "当前任务：";
+            // 
+            // label21_taskCount
+            // 
+            this.label21_taskCount.AutoSize = true;
+            this.label21_taskCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label21_taskCount.Location = new System.Drawing.Point(401, 214);
+            this.label21_taskCount.Name = "label21_taskCount";
+            this.label21_taskCount.Size = new System.Drawing.Size(16, 16);
+            this.label21_taskCount.TabIndex = 31;
+            this.label21_taskCount.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -695,7 +705,8 @@
         private System.Windows.Forms.TextBox textBox2_tickSize;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox1_symbolName;
-        private System.Windows.Forms.Button button1_tongji;
+        private System.Windows.Forms.Label label21_taskCount;
+        private System.Windows.Forms.Label label20;
     }
 }
 
