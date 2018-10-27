@@ -46,9 +46,9 @@ namespace YeTrade
 
             comboBox1_symbolType.SelectedIndex = 0;
 
-            double shouyi = ((mBs.mMoney - mBs.mInitMoney) / mBs.mInitMoney * 100);
+            double shouyi = (mBs.mMoney / mBs.mInitMoney * 100);
             label2_money.Text = (mBs.mMoney).ToString("F2") + " " + shouyi.ToString("F2") + "%";
-            label1_huiche.Text = (mBs.mHuiChe.mHuiCheRadio * 100).ToString("F4");
+            label1_huiche.Text = (mBs.mHuiChe.mHuiCheRadio * 100).ToString("F4") + "%";
             label1_hightime.Text = mBs.mHuiChe.mHighTime.ToShortDateString();
             label2_lowTime.Text = mBs.mHuiChe.mLowTime.ToShortDateString();
 

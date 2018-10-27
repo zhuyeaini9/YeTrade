@@ -46,6 +46,8 @@
             this.textBox2_tickSize = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox1_symbolName = new System.Windows.Forms.TextBox();
+            this.label21_taskCount = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.progressBar1_test = new System.Windows.Forms.ProgressBar();
             this.textBox1_leverage = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -75,8 +77,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1_breakPeriod = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21_taskCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -326,6 +326,26 @@
             this.textBox1_symbolName.TabIndex = 17;
             this.textBox1_symbolName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label21_taskCount
+            // 
+            this.label21_taskCount.AutoSize = true;
+            this.label21_taskCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label21_taskCount.Location = new System.Drawing.Point(401, 214);
+            this.label21_taskCount.Name = "label21_taskCount";
+            this.label21_taskCount.Size = new System.Drawing.Size(16, 16);
+            this.label21_taskCount.TabIndex = 31;
+            this.label21_taskCount.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(306, 215);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 16);
+            this.label20.TabIndex = 30;
+            this.label20.Text = "当前任务：";
+            // 
             // progressBar1_test
             // 
             this.progressBar1_test.Location = new System.Drawing.Point(404, 170);
@@ -485,7 +505,7 @@
             this.textBox7_money.Name = "textBox7_money";
             this.textBox7_money.Size = new System.Drawing.Size(98, 26);
             this.textBox7_money.TabIndex = 14;
-            this.textBox7_money.Text = "200000";
+            this.textBox7_money.Text = "20000";
             // 
             // label6
             // 
@@ -504,7 +524,7 @@
             this.textBox6_risk.Name = "textBox6_risk";
             this.textBox6_risk.Size = new System.Drawing.Size(98, 26);
             this.textBox6_risk.TabIndex = 12;
-            this.textBox6_risk.Text = "30";
+            this.textBox6_risk.Text = "45";
             // 
             // label5
             // 
@@ -599,7 +619,7 @@
             this.textBox1_breakPeriod.Name = "textBox1_breakPeriod";
             this.textBox1_breakPeriod.Size = new System.Drawing.Size(98, 26);
             this.textBox1_breakPeriod.TabIndex = 1;
-            this.textBox1_breakPeriod.Text = "100";
+            this.textBox1_breakPeriod.Text = "105";
             // 
             // label1
             // 
@@ -610,26 +630,6 @@
             this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "突破周期：";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(306, 215);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(88, 16);
-            this.label20.TabIndex = 30;
-            this.label20.Text = "当前任务：";
-            // 
-            // label21_taskCount
-            // 
-            this.label21_taskCount.AutoSize = true;
-            this.label21_taskCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21_taskCount.Location = new System.Drawing.Point(401, 214);
-            this.label21_taskCount.Name = "label21_taskCount";
-            this.label21_taskCount.Size = new System.Drawing.Size(16, 16);
-            this.label21_taskCount.TabIndex = 31;
-            this.label21_taskCount.Text = "0";
             // 
             // Form1
             // 
