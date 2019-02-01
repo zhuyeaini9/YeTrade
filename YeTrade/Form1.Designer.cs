@@ -378,9 +378,9 @@
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label11.Location = new System.Drawing.Point(310, 123);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(328, 16);
+            this.label11.Size = new System.Drawing.Size(280, 16);
             this.label11.TabIndex = 26;
-            this.label11.Text = "总风险因子：是指所有品种加起来的最大止损";
+            this.label11.Text = "是指单个品种最大止损占总资金的比例";
             // 
             // label10
             // 
@@ -485,7 +485,7 @@
             this.dateTimePicker1_start.Name = "dateTimePicker1_start";
             this.dateTimePicker1_start.Size = new System.Drawing.Size(136, 26);
             this.dateTimePicker1_start.TabIndex = 16;
-            this.dateTimePicker1_start.Value = new System.DateTime(2005, 3, 1, 0, 0, 0, 0);
+            this.dateTimePicker1_start.Value = new System.DateTime(2005, 1, 1, 0, 0, 0, 0);
             // 
             // button1_test
             // 
@@ -505,7 +505,7 @@
             this.textBox7_money.Name = "textBox7_money";
             this.textBox7_money.Size = new System.Drawing.Size(98, 26);
             this.textBox7_money.TabIndex = 14;
-            this.textBox7_money.Text = "20000";
+            this.textBox7_money.Text = "200000";
             // 
             // label6
             // 
@@ -524,7 +524,7 @@
             this.textBox6_risk.Name = "textBox6_risk";
             this.textBox6_risk.Size = new System.Drawing.Size(98, 26);
             this.textBox6_risk.TabIndex = 12;
-            this.textBox6_risk.Text = "45";
+            this.textBox6_risk.Text = "1.2";
             // 
             // label5
             // 
@@ -532,9 +532,9 @@
             this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.Location = new System.Drawing.Point(75, 123);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 16);
+            this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 11;
-            this.label5.Text = "总风险因子：";
+            this.label5.Text = "风险因子：";
             // 
             // checkBox1_averageFilter
             // 
@@ -642,6 +642,7 @@
             this.Text = "Ye交易测试";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

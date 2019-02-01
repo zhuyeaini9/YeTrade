@@ -67,7 +67,7 @@ namespace YeTrade
         }
     }
 
-    public class CSymbolPro
+    public class CSymbolPro:ICloneable
     {
         public string mSymbolTypeName;
         public string mSymbolName;
@@ -83,6 +83,20 @@ namespace YeTrade
         public double mMaxVol;
         //最小变化手数
         public double mStepVol;
+
+        public object Clone()
+        {
+            CSymbolPro re = new CSymbolPro();
+            re.mSymbolName = mSymbolName;
+            re.mSymbolTypeName = mSymbolTypeName;
+            re.mTickVal = mTickVal;
+            re.mTickSize = mTickSize;
+            re.mContractSize = mContractSize;
+            re.mMinVol = mMinVol;
+            re.mMaxVol = mMaxVol;
+            re.mStepVol = mStepVol;
+            return re;
+        }
     }
 
     public class CBreakStrategy
@@ -246,7 +260,7 @@ namespace YeTrade
         */
         public double getVol(CBreakStrategy bs,double point,DateTime d)
         {
-            double loss = bs.mMoney * bs.mRisk / 100 / bs.mSymbolCount;
+            double loss = bs.mMoney * bs.mRisk / 100;
             loss = toCuy(loss, d);
             double v = loss / mPro.mTickVal / (point / mPro.mTickSize);
 

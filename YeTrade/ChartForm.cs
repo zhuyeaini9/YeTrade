@@ -23,8 +23,7 @@ namespace YeTrade
         {
             string re = "";
 
-            re = string.Format("品种数量：{0}\n风险因子：{1}/{2}\n突破周期：{3}\nATR周期：{4}\n",mBs.mSymbolCount
-                ,(mBs.mRisk/mBs.mSymbolCount).ToString("F3")+"%"
+            re = string.Format("品种数量：{0}\n风险因子：{1}\n突破周期：{2}\nATR周期：{3}\n",mBs.mSymbolCount
                 , mBs.mRisk+"%"
                 ,mBs.mBreakPeriod
                 ,mBs.mAtrPeriod);

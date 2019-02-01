@@ -237,7 +237,7 @@ namespace YeTrade
                 {
                     if (j.Checked)
                     {
-                        re.Add(mSymbolList.First(k => k.mSymbolName == j.Text));
+                        re.Add((CSymbolPro)mSymbolList.First(k => k.mSymbolName == j.Text).Clone());
                     }
                 }
             }
@@ -248,6 +248,15 @@ namespace YeTrade
         {
             if (MessageBox.Show("将会下载该时间段所有品种的历史价格数据，需要较多时间，确定继续吗？", "", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
+
+            DateTime startTime = dateTimePicker1_start.Value;
+            DateTime endTime = dateTimePicker2_end.Value;
+
+            if(endTime<startTime)
+            {
+                MessageBox.Show("结束日期必须大于等于开始日期");
+                return;
+            }
 
             button1_historyDownload.Enabled = false;
 
@@ -261,7 +270,39 @@ namespace YeTrade
             {
                 foreach (var j in selSymbols)
                 {
-                    Dictionary<DateTime, CCandleData> priceData = CHelp.getCandleHistoryData(j.mSymbolName, dateTimePicker1_start.Value, dateTimePicker2_end.Value, pricePeriod);
+                    startTime = dateTimePicker1_start.Value;
+                    endTime = dateTimePicker2_end.Value;
+
+                    Dictionary<DateTime, CCandleData> priceData = new Dictionary<DateTime, CCandleData>();
+                    DateTime nowTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    if (endTime > nowTime.AddDays(-30))
+                        endTime = nowTime.AddDays(-30);
+                    int days = (endTime - startTime).Days;
+                    if (days>4000)
+                    {
+                        DateTime middleTime;
+                        do
+                        {
+                            middleTime = startTime.AddDays(3000);
+                            if (middleTime > endTime)
+                                middleTime = endTime;
+
+                            Dictionary<DateTime, CCandleData> priceToAdd = CHelp.getCandleHistoryData(j.mSymbolName, startTime, middleTime, pricePeriod);
+                            foreach(var v in priceToAdd)
+                            {
+                                if(!priceData.ContainsKey(v.Key))
+                                {
+                                    priceData[v.Key] = v.Value;
+                                }
+                            }
+                            startTime = middleTime.AddDays(1);
+                        }
+                        while (middleTime < endTime);
+                    }
+                    else
+                    {
+                        priceData = CHelp.getCandleHistoryData(j.mSymbolName, startTime, endTime, pricePeriod);
+                    }
 
                     if (priceData.Count > 0)
                     {
@@ -368,6 +409,11 @@ namespace YeTrade
                     this.CheckAllChildNodes(e.Node, e.Node.Checked);
                 }
             }
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            //test
         }
     }
 }

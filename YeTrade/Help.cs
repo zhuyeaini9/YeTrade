@@ -36,12 +36,58 @@ namespace YeTrade
         
         public static double toUSD(string currency,DateTime d)
         {
-            double re = 1;
+            double re = 1.0;
 
             if (currency == "USD")
-                re = 1;
+                re = 1.0;
             else
             {
+                string symbol = "";
+
+                if(currency == "JPY")
+                {
+                    symbol = "USD_JPY";
+                }
+                if (currency == "GBP")
+                {
+                    symbol = "GBP_USD";
+                }
+                if (currency == "EUR")
+                {
+                    symbol = "EUR_USD";
+                }
+                if (currency == "CHF")
+                {
+                    symbol = "USD_CHF";
+                }
+                if (currency == "CAD")
+                {
+                    symbol = "USD_CAD";
+                }
+                if (currency == "AUD")
+                {
+                    symbol = "AUD_USD";
+                }
+                if (currency == "NZD")
+                {
+                    symbol = "NZD_USD";
+                }
+                if (currency == "HKD")
+                {
+                    symbol = "USD_HKD";
+                }
+                OHLC p = new OHLC();
+                getRecentPrice(symbol, d, out p);
+                if(symbol.StartsWith("USD"))
+                {
+                    return 1.0 / p.c;
+                }
+                else
+                {
+                    return p.c;
+                }
+              
+                /*
                 OHLC p = new OHLC();
                 string symbol = currency + "_USD";
                 bool hasP = getRecentPrice(symbol, d, out p);
@@ -55,6 +101,7 @@ namespace YeTrade
                     hasP = getRecentPrice(symbol, d, out p);
                     re = 1/p.c;
                 }
+                */
 
             }
             
